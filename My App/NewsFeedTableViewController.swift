@@ -9,6 +9,7 @@
 import UIKit
 import FBSDKCoreKit
 import FirebaseAuth
+import FirebaseDatabase
 
 class NewsFeedTableViewController: UITableViewController {
     
@@ -26,19 +27,29 @@ class NewsFeedTableViewController: UITableViewController {
         self.presentViewController(viewController, animated: true, completion: nil)
         
     }
-    
+    let databaseRef = FIRDatabase.database().reference()
+    let currentUser = FIRAuth.auth()?.currentUser
+    var eventsDict = NSDictionary()
+
     // Alternative to segueing directly from the storyboard
     
-//    @IBAction func didTapCreateButton(sender: UIBarButtonItem) {
-//        let mainStoryBoard: UIStoryboard = UIStoryboard(name: "Main", bundle: nil)
-//        let viewController: UIViewController = mainStoryBoard.instantiateViewControllerWithIdentifier("EventView")
-//        self.presentViewController(viewController, animated: true, completion: nil)
-//        
-//    }
+    @IBAction func didTapCreateButton(sender: UIBarButtonItem) {
+        let mainStoryBoard: UIStoryboard = UIStoryboard(name: "Main", bundle: nil)
+        let viewController: UIViewController = mainStoryBoard.instantiateViewControllerWithIdentifier("EventView")
+        self.presentViewController(viewController, animated: true, completion: nil)
+    
+    }
     
     override func viewDidLoad() {
         super.viewDidLoad()
-
+        /**
+        dispatch_async(dispatch_get_main_queue()) {
+            var refHandle = self.databaseRef.observeEventType(FIRDataEventType.Value, withBlock: { (snapshot) in
+                self.eventsDict = snapshot.value as! NSDictionary
+                self.tableView.reloadData()
+            })
+        }
+        **/
         // Uncomment the following line to preserve selection between presentations
         // self.clearsSelectionOnViewWillAppear = false
 
@@ -60,15 +71,16 @@ class NewsFeedTableViewController: UITableViewController {
 
     override func tableView(tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
         // #warning Incomplete implementation, return the number of rows
-        return 0
+        return 0//self.eventsDict.count
     }
 
-    /*
+    /**
     override func tableView(tableView: UITableView, cellForRowAtIndexPath indexPath: NSIndexPath) -> UITableViewCell {
-        let cell = tableView.dequeueReusableCellWithIdentifier("reuseIdentifier", forIndexPath: indexPath)
-
-        // Configure the cell...
-
+        print (self.eventsDict)
+        let dequeued:AnyObject = tableView.dequeueReusableCellWithIdentifier("Event Cell", forIndexPath: indexPath)
+        let cell = dequeued as! UITableViewCell
+        //cell.textLabel?.text = data!["activity"]
+        //cell.detailTextLabel?.text = data!["time"]
         return cell
     }
     */
