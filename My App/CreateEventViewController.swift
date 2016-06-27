@@ -31,7 +31,7 @@ class CreateEventViewController: UIViewController {
                     //case "activity":
                         //self.databaseRef.child("events").child("\()/activity").setValue(item)
                     case "time":
-                        self.databaseRef.child("events").child("\(first)/time").setValue(item)
+                        self.databaseRef.child("events").child("\(first!)/time").setValue(item)
                     default:
                         print("Don't update")
                 }

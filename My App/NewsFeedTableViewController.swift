@@ -29,7 +29,8 @@ class NewsFeedTableViewController: UITableViewController {
     }
     let databaseRef = FIRDatabase.database().reference()
     let currentUser = FIRAuth.auth()?.currentUser
-    var eventsDict = NSDictionary()
+    var eventsDict = [String: AnyObject]()
+    var objectArray = [[AnyObject]]()
 
     // Alternative to segueing directly from the storyboard
     
@@ -42,14 +43,18 @@ class NewsFeedTableViewController: UITableViewController {
     
     override func viewDidLoad() {
         super.viewDidLoad()
-        /**
         dispatch_async(dispatch_get_main_queue()) {
-            var refHandle = self.databaseRef.observeEventType(FIRDataEventType.Value, withBlock: { (snapshot) in
-                self.eventsDict = snapshot.value as! NSDictionary
+            var refHandle = self.databaseRef.child("events").observeEventType(FIRDataEventType.Value, withBlock: { (snapshot) in
+                self.objectArray = []
+                self.eventsDict = snapshot.value as! [String : AnyObject]
+                for (key, value) in self.eventsDict {
+                    let dict = value as! NSDictionary
+                    self.objectArray.append([key, dict])
+                }
                 self.tableView.reloadData()
             })
+ 
         }
-        **/
         // Uncomment the following line to preserve selection between presentations
         // self.clearsSelectionOnViewWillAppear = false
 
@@ -66,24 +71,22 @@ class NewsFeedTableViewController: UITableViewController {
 
     override func numberOfSectionsInTableView(tableView: UITableView) -> Int {
         // #warning Incomplete implementation, return the number of sections
-        return 0
+        return 1
     }
 
     override func tableView(tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
         // #warning Incomplete implementation, return the number of rows
-        return 0//self.eventsDict.count
+        return self.objectArray.count
     }
 
-    /**
     override func tableView(tableView: UITableView, cellForRowAtIndexPath indexPath: NSIndexPath) -> UITableViewCell {
-        print (self.eventsDict)
+        let data = self.objectArray[indexPath.row]
         let dequeued:AnyObject = tableView.dequeueReusableCellWithIdentifier("Event Cell", forIndexPath: indexPath)
         let cell = dequeued as! UITableViewCell
-        //cell.textLabel?.text = data!["activity"]
-        //cell.detailTextLabel?.text = data!["time"]
+        cell.textLabel?.text = data[0] as? String
+        cell.detailTextLabel?.text = data[1].objectForKey("time") as? String
         return cell
     }
-    */
 
     /*
     // Override to support conditional editing of the table view.
