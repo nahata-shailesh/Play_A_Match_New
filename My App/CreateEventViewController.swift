@@ -15,6 +15,7 @@ class CreateEventViewController: UIViewController {
     let textFields = ["activity", "time"]
     let databaseRef = FIRDatabase.database().reference()
     let currentUser = FIRAuth.auth()?.currentUser
+    
     @IBAction func doneButtonTapped(sender: UIButton) {
         let first = (self.view.viewWithTag(1) as! UITextField).text
         //iterate through text fields

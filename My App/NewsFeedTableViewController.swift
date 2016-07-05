@@ -27,6 +27,7 @@ class NewsFeedTableViewController: UITableViewController {
         self.presentViewController(viewController, animated: true, completion: nil)
         
     }
+    
     let databaseRef = FIRDatabase.database().reference()
     let currentUser = FIRAuth.auth()?.currentUser
     var eventsDict = [String: AnyObject]()
@@ -34,19 +35,19 @@ class NewsFeedTableViewController: UITableViewController {
 
     // Alternative to segueing directly from the storyboard
     
-    @IBAction func didTapCreateButton(sender: UIBarButtonItem) {
-        let mainStoryBoard: UIStoryboard = UIStoryboard(name: "Main", bundle: nil)
-        let viewController: UIViewController = mainStoryBoard.instantiateViewControllerWithIdentifier("EventView")
-        self.presentViewController(viewController, animated: true, completion: nil)
-    
-    }
+//    @IBAction func didTapCreateButton(sender: UIBarButtonItem) {
+//        let mainStoryBoard: UIStoryboard = UIStoryboard(name: "Main", bundle: nil)
+//        let viewController: UIViewController = mainStoryBoard.instantiateViewControllerWithIdentifier("EventView")
+//        self.presentViewController(viewController, animated: true, completion: nil)
+//    
+//    }
     
     override func viewDidLoad() {
         super.viewDidLoad()
         dispatch_async(dispatch_get_main_queue()) {
             var refHandle = self.databaseRef.child("events").observeEventType(FIRDataEventType.Value, withBlock: { (snapshot) in
                 self.objectArray = []
-                self.eventsDict = snapshot.value as! [String : AnyObject]
+                    self.eventsDict = (snapshot.value as? [String : AnyObject])!
                 for (key, value) in self.eventsDict {
                     let dict = value as! NSDictionary
                     self.objectArray.append([key, dict])

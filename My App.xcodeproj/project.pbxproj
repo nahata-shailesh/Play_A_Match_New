@@ -262,6 +262,7 @@
 				TargetAttributes = {
 					F250FD2E1D2049D200786F12 = {
 						CreatedOnToolsVersion = 7.3.1;
+						DevelopmentTeam = J72E875EFH;
 					};
 					F250FD421D2049D300786F12 = {
 						CreatedOnToolsVersion = 7.3.1;
@@ -589,6 +590,7 @@
 			baseConfigurationReference = 878331B57EA2D324A28570A8 /* Pods-My App.debug.xcconfig */;
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
+				CODE_SIGN_IDENTITY = "iPhone Developer";
 				FRAMEWORK_SEARCH_PATHS = (
 					"$(inherited)",
 					"\"${PODS_ROOT}/FirebaseAnalytics/Frameworks\"",
@@ -598,7 +600,7 @@
 					"\"${PODS_ROOT}/GoogleNetworkingUtilities/Frameworks\"",
 					"\"${PODS_ROOT}/GoogleSymbolUtilities/Frameworks\"",
 					"\"${PODS_ROOT}/GoogleUtilities/Frameworks\"",
-					"/Users/advaypal/Documents/FacebookSDKs-iOS-4.13.1",
+					"/Users/Shailesh/Documents/FacebookSDKs-iOS-4",
 				);
 				INFOPLIST_FILE = "My App/Info.plist";
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks";
@@ -612,6 +614,7 @@
 			baseConfigurationReference = 1FDE5CDC85E5B82E0D0DCD0B /* Pods-My App.release.xcconfig */;
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
+				CODE_SIGN_IDENTITY = "iPhone Developer";
 				FRAMEWORK_SEARCH_PATHS = (
 					"$(inherited)",
 					"\"${PODS_ROOT}/FirebaseAnalytics/Frameworks\"",
@@ -621,7 +624,7 @@
 					"\"${PODS_ROOT}/GoogleNetworkingUtilities/Frameworks\"",
 					"\"${PODS_ROOT}/GoogleSymbolUtilities/Frameworks\"",
 					"\"${PODS_ROOT}/GoogleUtilities/Frameworks\"",
-					"/Users/advaypal/Documents/FacebookSDKs-iOS-4.13.1",
+					"/Users/Shailesh/Documents/FacebookSDKs-iOS-4",
 				);
 				INFOPLIST_FILE = "My App/Info.plist";
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks";
