@@ -26,7 +26,7 @@
                 if let user = user {
                     // User is signed in.
                     let mainStoryBoard: UIStoryboard = UIStoryboard(name: "Main", bundle: nil)
-                    let tableViewController: UIViewController = mainStoryBoard.instantiateViewControllerWithIdentifier("navigate")
+                    let tableViewController: UIViewController = mainStoryBoard.instantiateViewControllerWithIdentifier("TabBarController")
                     self.presentViewController(tableViewController, animated: true, completion: nil)
                     
                 } else {
