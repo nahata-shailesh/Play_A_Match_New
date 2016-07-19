@@ -12,35 +12,21 @@ import FirebaseAuth
 
 class CreateEventViewController: UIViewController {
     
-    let textFields = ["activity", "time"]
+    let textFields = ["activity", "time", "age", "number", "location"]
     let databaseRef = FIRDatabase.database().reference()
     let currentUser = FIRAuth.auth()?.currentUser
     
     @IBAction func doneButtonTapped(sender: UIButton) {
-        let first = (self.view.viewWithTag(1) as! UITextField).text
+        let activity = (self.view.viewWithTag(1) as! UITextField).text
         //iterate through text fields
         var i = 1 //
         while i < textFields.count {
-            // to fix: what if one is filled and other isn't?
             //text fields have been assigned with viewTags which start with 1
             let textFieldValue = self.view.viewWithTag(i+1) as! UITextField
             let item = textFieldValue.text
-            //if not empty
-            if item != "" {
-                switch self.textFields[i] {
-                    //update db
-                    //case "activity":
-                        //self.databaseRef.child("events").child("\()/activity").setValue(item)
-                    case "time":
-                        self.databaseRef.child("events").child("\(first!)/time").setValue(item)
-                    default:
-                        print("Don't update")
-                }
-            }
+            self.databaseRef.child("events").child("\(activity!)/\(self.textFields[i])").setValue(item)
             i = i + 1
-            
         }
-        
         // go back to event feed
         self.performSegueWithIdentifier("unwindToEvent", sender: self)
     }

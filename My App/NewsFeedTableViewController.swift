@@ -45,9 +45,10 @@ class NewsFeedTableViewController: UITableViewController {
     override func viewDidLoad() {
         super.viewDidLoad()
         dispatch_async(dispatch_get_main_queue()) {
-            var refHandle = self.databaseRef.child("events").observeEventType(FIRDataEventType.Value, withBlock: { (snapshot) in
+            self.databaseRef.child("events").observeEventType(FIRDataEventType.Value, withBlock: { (snapshot) in
                 self.objectArray = []
-                    self.eventsDict = (snapshot.value as? [String : AnyObject])!
+                // todo: what if snapshot is null
+                self.eventsDict = (snapshot.value as? [String : AnyObject])!
                 for (key, value) in self.eventsDict {
                     let dict = value as! NSDictionary
                     self.objectArray.append([key, dict])

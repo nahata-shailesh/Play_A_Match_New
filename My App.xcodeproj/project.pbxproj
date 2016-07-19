@@ -616,7 +616,7 @@
 					"\"${PODS_ROOT}/GoogleNetworkingUtilities/Frameworks\"",
 					"\"${PODS_ROOT}/GoogleSymbolUtilities/Frameworks\"",
 					"\"${PODS_ROOT}/GoogleUtilities/Frameworks\"",
-					"/Users/Shailesh/Documents/FacebookSDKs-iOS-4",
+					"/Users/advaypal/Documents/FacebookSDKs-iOS-4.13.1",
 				);
 				INFOPLIST_FILE = "My App/Info.plist";
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks";
@@ -640,7 +640,7 @@
 					"\"${PODS_ROOT}/GoogleNetworkingUtilities/Frameworks\"",
 					"\"${PODS_ROOT}/GoogleSymbolUtilities/Frameworks\"",
 					"\"${PODS_ROOT}/GoogleUtilities/Frameworks\"",
-					"/Users/Shailesh/Documents/FacebookSDKs-iOS-4",
+					"/Users/advaypal/Documents/FacebookSDKs-iOS-4.13.1",
 				);
 				INFOPLIST_FILE = "My App/Info.plist";
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks";
