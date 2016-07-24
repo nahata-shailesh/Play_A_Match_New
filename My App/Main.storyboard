@@ -136,6 +136,14 @@
                         <rect key="frame" x="0.0" y="0.0" width="600" height="600"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                         <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
+                        <button key="tableFooterView" opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" id="3el-Kx-KNo">
+                            <rect key="frame" x="0.0" y="136" width="600" height="44"/>
+                            <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
+                            <state key="normal" title="Join Event"/>
+                            <connections>
+                                <action selector="didTapJoin:" destination="N4s-se-peu" eventType="touchUpInside" id="6CE-4R-NER"/>
+                            </connections>
+                        </button>
                         <prototypes>
                             <tableViewCell clipsSubviews="YES" contentMode="scaleToFill" restorationIdentifier="Event Cell" selectionStyle="default" indentationWidth="10" reuseIdentifier="Event Cell" id="RDj-3C-RhA" customClass="ProfileDetailsTableViewCell" customModule="My_App" customModuleProvider="target">
                                 <rect key="frame" x="0.0" y="92" width="600" height="44"/>
@@ -173,11 +181,8 @@
                             <button key="customView" opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" id="Qfg-Vp-dHF">
                                 <rect key="frame" x="20" y="4" width="144" height="36"/>
                                 <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
-                                <fontDescription key="fontDescription" type="system" pointSize="20"/>
+                                <fontDescription key="fontDescription" name="HelveticaNeue" family="Helvetica Neue" pointSize="20"/>
                                 <state key="normal" title="&lt; News Feed"/>
-                                <state key="highlighted">
-                                    <color key="titleColor" red="0.0" green="0.47843137250000001" blue="1" alpha="1" colorSpace="calibratedRGB"/>
-                                </state>
                                 <connections>
                                     <action selector="backButtonPressed:" destination="N4s-se-peu" eventType="touchUpInside" id="oPA-fv-trE"/>
                                 </connections>
@@ -187,6 +192,7 @@
                             <button key="customView" opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" id="3iw-1d-mPy">
                                 <rect key="frame" x="556" y="10" width="24" height="24"/>
                                 <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
+                                <rect key="contentStretch" x="0.0" y="0.0" width="0.5" height="1"/>
                                 <fontDescription key="fontDescription" type="system" pointSize="12"/>
                                 <state key="normal" image="bubble-chat"/>
                                 <connections>
@@ -461,7 +467,6 @@
         <!--Tab Bar Controller-->
         <scene sceneID="oBt-JN-wnY">
             <objects>
-                <placeholder placeholderIdentifier="IBFirstResponder" id="06A-SN-AWv" userLabel="First Responder" sceneMemberID="firstResponder"/>
                 <tabBarController storyboardIdentifier="TabBarController" automaticallyAdjustsScrollViewInsets="NO" id="HGH-ba-3Qw" sceneMemberID="viewController">
                     <toolbarItems/>
                     <navigationItem key="navigationItem" id="hw3-80-c5o"/>
@@ -474,25 +479,28 @@
                         <segue destination="8aT-Eo-zci" kind="relationship" relationship="viewControllers" id="Ae4-Qj-mmQ"/>
                     </connections>
                 </tabBarController>
+                <placeholder placeholderIdentifier="IBFirstResponder" id="06A-SN-AWv" userLabel="First Responder" sceneMemberID="firstResponder"/>
             </objects>
             <point key="canvasLocation" x="116" y="260"/>
         </scene>
         <!--Home-->
         <scene sceneID="D0f-YN-7Bp">
             <objects>
-                <placeholder placeholderIdentifier="IBFirstResponder" id="Rko-P3-J0s" userLabel="First Responder" sceneMemberID="firstResponder"/>
                 <navigationController automaticallyAdjustsScrollViewInsets="NO" id="oBb-4w-e3S" sceneMemberID="viewController">
                     <tabBarItem key="tabBarItem" title="Home" image="home" id="6H0-L2-9ho"/>
                     <toolbarItems/>
-                    <navigationBar key="navigationBar" contentMode="scaleToFill" id="YGO-g8-TWI">
+                    <navigationBar key="navigationBar" contentMode="scaleToFill" barStyle="black" id="YGO-g8-TWI">
                         <rect key="frame" x="0.0" y="0.0" width="320" height="44"/>
                         <autoresizingMask key="autoresizingMask"/>
+                        <color key="tintColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
+                        <color key="barTintColor" red="0.0" green="0.47843137250000001" blue="1" alpha="1" colorSpace="calibratedRGB"/>
                     </navigationBar>
                     <nil name="viewControllers"/>
                     <connections>
                         <segue destination="be7-FN-1y9" kind="relationship" relationship="rootViewController" id="KX8-9o-3VD"/>
                     </connections>
                 </navigationController>
+                <placeholder placeholderIdentifier="IBFirstResponder" id="Rko-P3-J0s" userLabel="First Responder" sceneMemberID="firstResponder"/>
             </objects>
             <point key="canvasLocation" x="792" y="260"/>
         </scene>
@@ -502,9 +510,11 @@
                 <navigationController automaticallyAdjustsScrollViewInsets="NO" id="8aT-Eo-zci" sceneMemberID="viewController">
                     <tabBarItem key="tabBarItem" title="Profile" image="user" id="vb2-cd-kvw"/>
                     <toolbarItems/>
-                    <navigationBar key="navigationBar" contentMode="scaleToFill" id="NKH-LQ-aLy">
+                    <navigationBar key="navigationBar" contentMode="scaleToFill" barStyle="black" id="NKH-LQ-aLy">
                         <rect key="frame" x="0.0" y="0.0" width="320" height="44"/>
                         <autoresizingMask key="autoresizingMask"/>
+                        <color key="tintColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
+                        <color key="barTintColor" red="0.0" green="0.47843137250000001" blue="1" alpha="1" colorSpace="calibratedRGB"/>
                     </navigationBar>
                     <nil name="viewControllers"/>
                     <connections>
@@ -520,9 +530,12 @@
             <objects>
                 <navigationController automaticallyAdjustsScrollViewInsets="NO" id="3gl-js-mee" sceneMemberID="viewController">
                     <toolbarItems/>
-                    <navigationBar key="navigationBar" contentMode="scaleToFill" id="qyj-RQ-9i3">
+                    <navigationBar key="navigationBar" contentMode="scaleToFill" barStyle="black" id="qyj-RQ-9i3">
                         <rect key="frame" x="0.0" y="0.0" width="320" height="44"/>
                         <autoresizingMask key="autoresizingMask"/>
+                        <color key="backgroundColor" white="0.0" alpha="1" colorSpace="calibratedWhite"/>
+                        <color key="tintColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
+                        <color key="barTintColor" red="0.0" green="0.47843137250000001" blue="1" alpha="1" colorSpace="calibratedRGB"/>
                     </navigationBar>
                     <nil name="viewControllers"/>
                     <connections>

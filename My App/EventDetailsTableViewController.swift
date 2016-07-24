@@ -29,6 +29,9 @@ class EventDetailsTableViewController: UITableViewController {
         self.performSegueWithIdentifier("unwindToNews", sender: self)
     }
     
+    @IBAction func didTapJoin(sender: UIButton) {
+        print ("Button touched")
+    }
     override func viewDidLoad() {
         super.viewDidLoad()
         
