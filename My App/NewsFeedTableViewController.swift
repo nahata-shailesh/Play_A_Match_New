@@ -12,8 +12,10 @@ import FirebaseAuth
 import FirebaseDatabase
 
 class NewsFeedTableViewController: UITableViewController {
+    var about = []
     
     @IBAction func unwindToEventsPage(segue: UIStoryboardSegue) {}
+    @IBAction func unwindToNewsFeed(segue: UIStoryboardSegue) {}
 
     @IBAction func didTapLogout(sender: UIBarButtonItem) {
         // signs the user out of the firebase app
@@ -89,6 +91,31 @@ class NewsFeedTableViewController: UITableViewController {
         cell.detailTextLabel?.text = data[1].objectForKey("time") as? String
         return cell
     }
+    
+//    override func tableView(tableView: UITableView, didSelectRowAtIndexPath indexPath: NSIndexPath) {
+//        let arr = self.objectArray[indexPath.row]
+//        let eventDetailsTVC = EventDetailsTableViewController()
+//        eventDetailsTVC.updateUI(arr)
+//        //self.performSegueWithIdentifier("goToEventDetails", sender: indexPath)
+//
+//    }
+
+    
+    override func prepareForSegue(segue: UIStoryboardSegue, sender: AnyObject?) {
+        var destination = segue.destinationViewController as UIViewController
+        if let navCon = destination as? UINavigationController {
+            destination = navCon.visibleViewController!
+        }
+        
+        if let eventDetailsTVC = destination as? EventDetailsTableViewController {
+            if (segue.identifier == "goToEventDetails") {
+                let indexPath: NSIndexPath = self.tableView.indexPathForSelectedRow!
+                eventDetailsTVC.about = self.objectArray[indexPath.row]
+            }
+        }
+    }
+}
+
 
     /*
     // Override to support conditional editing of the table view.
@@ -124,15 +151,3 @@ class NewsFeedTableViewController: UITableViewController {
         return true
     }
     */
-
-    /*
-    // MARK: - Navigation
-
-    // In a storyboard-based application, you will often want to do a little preparation before navigation
-    override func prepareForSegue(segue: UIStoryboardSegue, sender: AnyObject?) {
-        // Get the new view controller using segue.destinationViewController.
-        // Pass the selected object to the new view controller.
-    }
-    */
-
-}

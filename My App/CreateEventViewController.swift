@@ -12,7 +12,7 @@ import FirebaseAuth
 
 class CreateEventViewController: UIViewController {
     
-    let textFields = ["activity", "time", "age", "number", "location"]
+    let textFields = ["Activity Name", "Suggested Time", "Targetted Age Group", "Number of people looking for", "Location"]
     let databaseRef = FIRDatabase.database().reference()
     let currentUser = FIRAuth.auth()?.currentUser
     
