@@ -22,7 +22,7 @@ class ProfileTableViewController: UITableViewController {
 
         self.tableView.contentInset = UIEdgeInsetsMake(20, 0, 0, 0)
         
-        var refHandle = self.ref.child("user_profile").observeEventType(FIRDataEventType.Value, withBlock: { (snapshot) in
+        self.ref.child("user_profile").observeEventType(FIRDataEventType.Value, withBlock: { (snapshot) in
             
             let usersDict = snapshot.value as! NSDictionary
             let userDetails = usersDict.objectForKey(self.user!.uid)
@@ -34,22 +34,8 @@ class ProfileTableViewController: UITableViewController {
                 let indexPath = NSIndexPath(forRow: index, inSection: 0)
                 let cell: TextInputTableViewCell? = self.tableView.cellForRowAtIndexPath(indexPath) as! TextInputTableViewCell?
                 let field: String? = (cell?.TextField.placeholder)!
-                
-                switch field! {
-                case "Name" :
-                    cell?.configure(userDetails?.objectForKey("Name") as? String, placeholder: "Name")
-                case "Phone" :
-                    cell?.configure(userDetails?.objectForKey("Phone") as? String, placeholder: "Phone")
-                case "Gender" :
-                    cell?.configure(userDetails?.objectForKey("Gender") as? String, placeholder: "Gender")
-                case "Age" :
-                    cell?.configure(userDetails?.objectForKey("Age") as? String, placeholder: "Age")
-                case "Email" :
-                    cell?.configure(userDetails?.objectForKey("Email") as? String, placeholder: "Email")
-                default:
-                    break
-                    
-                }
+                cell?.configure(userDetails?.objectForKey(field!) as? String, placeholder: field!)
+
                 index += 1
             }
             
@@ -67,21 +53,8 @@ class ProfileTableViewController: UITableViewController {
             
             if cell?.TextField.text != "" {
                 let item: String? = cell?.TextField.text
+                self.ref.child("user_profile").child("\(user!.uid)/\(about[index])").setValue(item)
                 
-                switch about[index] {
-                case "Name":
-                    self.ref.child("user_profile").child("\(user!.uid)/Name").setValue(item)
-                case "Phone":
-                    self.ref.child("user_profile").child("\(user!.uid)/Phone").setValue(item)
-                    case "Gender":
-                        self.ref.child("user_profile").child("\(user!.uid)/Gender").setValue(item)
-                    case "Age":
-                        self.ref.child("user_profile").child("\(user!.uid)/Age").setValue(item)
-                    case "Email":
-                        self.ref.child("user_profile").child("\(user!.uid)/Email").setValue(item)
-                default:
-                    print ("Dont update!")
-                }
             }
             index += 1
         }

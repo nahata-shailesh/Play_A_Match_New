@@ -87,6 +87,7 @@ class NewsFeedTableViewController: UITableViewController {
         let data = self.objectArray[indexPath.row]
         let dequeued:AnyObject = tableView.dequeueReusableCellWithIdentifier("Event Cell", forIndexPath: indexPath)
         let cell = dequeued as! UITableViewCell
+        //display name of event, type, and time
         cell.textLabel?.text = data[0] as? String
         cell.detailTextLabel?.text = data[1].objectForKey("time") as? String
         return cell
