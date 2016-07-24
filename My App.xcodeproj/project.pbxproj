@@ -19,8 +19,9 @@
 		F250FD611D204A4C00786F12 /* GoogleService-Info.plist in Resources */ = {isa = PBXBuildFile; fileRef = F250FD601D204A4C00786F12 /* GoogleService-Info.plist */; };
 		F2B081401D3A1A2F00F4BD31 /* ProfileTableViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = F2B0813F1D3A1A2F00F4BD31 /* ProfileTableViewController.swift */; };
 		F2B081461D3A207C00F4BD31 /* TextInputTableViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = F2B081451D3A207C00F4BD31 /* TextInputTableViewCell.swift */; };
-		F2B081481D3B415F00F4BD31 /* EventDetailsTableViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = F2B081471D3B415F00F4BD31 /* EventDetailsTableViewController.swift */; };
 		F2B0814A1D3B42C800F4BD31 /* ChatViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = F2B081491D3B42C800F4BD31 /* ChatViewController.swift */; };
+		F2E58DB01D3FABF200857744 /* ProfileDetailsTableViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = F2E58DAF1D3FABF200857744 /* ProfileDetailsTableViewCell.swift */; };
+		F2E58DB21D3FAF7100857744 /* EventDetailsTableViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = F2E58DB11D3FAF7100857744 /* EventDetailsTableViewController.swift */; };
 		F2EFC0E71D21099100D78F18 /* Main.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = F2EFC0E61D21099100D78F18 /* Main.storyboard */; };
 		F2EFC0E91D210A2500D78F18 /* NewsFeedTableViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = F2EFC0E81D210A2500D78F18 /* NewsFeedTableViewController.swift */; };
 		F2EFC0EB1D210A3B00D78F18 /* CreateEventViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = F2EFC0EA1D210A3B00D78F18 /* CreateEventViewController.swift */; };
@@ -71,8 +72,9 @@
 		F250FD601D204A4C00786F12 /* GoogleService-Info.plist */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.xml; path = "GoogleService-Info.plist"; sourceTree = "<group>"; };
 		F2B0813F1D3A1A2F00F4BD31 /* ProfileTableViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ProfileTableViewController.swift; sourceTree = "<group>"; };
 		F2B081451D3A207C00F4BD31 /* TextInputTableViewCell.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = TextInputTableViewCell.swift; sourceTree = "<group>"; };
-		F2B081471D3B415F00F4BD31 /* EventDetailsTableViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = EventDetailsTableViewController.swift; sourceTree = "<group>"; };
 		F2B081491D3B42C800F4BD31 /* ChatViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ChatViewController.swift; sourceTree = "<group>"; };
+		F2E58DAF1D3FABF200857744 /* ProfileDetailsTableViewCell.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ProfileDetailsTableViewCell.swift; sourceTree = "<group>"; };
+		F2E58DB11D3FAF7100857744 /* EventDetailsTableViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = EventDetailsTableViewController.swift; sourceTree = "<group>"; };
 		F2EFC0E61D21099100D78F18 /* Main.storyboard */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.storyboard; path = Main.storyboard; sourceTree = "<group>"; };
 		F2EFC0E81D210A2500D78F18 /* NewsFeedTableViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = NewsFeedTableViewController.swift; sourceTree = "<group>"; };
 		F2EFC0EA1D210A3B00D78F18 /* CreateEventViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = CreateEventViewController.swift; sourceTree = "<group>"; };
@@ -163,6 +165,7 @@
 		F250FD311D2049D200786F12 /* My App */ = {
 			isa = PBXGroup;
 			children = (
+				F2E58DB11D3FAF7100857744 /* EventDetailsTableViewController.swift */,
 				F250FD321D2049D200786F12 /* AppDelegate.swift */,
 				F250FD341D2049D200786F12 /* ViewController.swift */,
 				F250FD391D2049D300786F12 /* Assets.xcassets */,
@@ -171,8 +174,8 @@
 				F2EFC0EA1D210A3B00D78F18 /* CreateEventViewController.swift */,
 				F2EFC0E61D21099100D78F18 /* Main.storyboard */,
 				F2B081491D3B42C800F4BD31 /* ChatViewController.swift */,
-				F2B081471D3B415F00F4BD31 /* EventDetailsTableViewController.swift */,
 				F2B081451D3A207C00F4BD31 /* TextInputTableViewCell.swift */,
+				F2E58DAF1D3FABF200857744 /* ProfileDetailsTableViewCell.swift */,
 				F2B0813F1D3A1A2F00F4BD31 /* ProfileTableViewController.swift */,
 				F250FD601D204A4C00786F12 /* GoogleService-Info.plist */,
 				F250FD3E1D2049D300786F12 /* Info.plist */,
@@ -463,10 +466,11 @@
 			buildActionMask = 2147483647;
 			files = (
 				F2EFC0E91D210A2500D78F18 /* NewsFeedTableViewController.swift in Sources */,
-				F2B081481D3B415F00F4BD31 /* EventDetailsTableViewController.swift in Sources */,
+				F2E58DB01D3FABF200857744 /* ProfileDetailsTableViewCell.swift in Sources */,
 				F2B0814A1D3B42C800F4BD31 /* ChatViewController.swift in Sources */,
 				F2B081461D3A207C00F4BD31 /* TextInputTableViewCell.swift in Sources */,
 				F2B081401D3A1A2F00F4BD31 /* ProfileTableViewController.swift in Sources */,
+				F2E58DB21D3FAF7100857744 /* EventDetailsTableViewController.swift in Sources */,
 				F250FD351D2049D200786F12 /* ViewController.swift in Sources */,
 				F2EFC0EB1D210A3B00D78F18 /* CreateEventViewController.swift in Sources */,
 				F250FD331D2049D200786F12 /* AppDelegate.swift in Sources */,
@@ -616,7 +620,7 @@
 					"\"${PODS_ROOT}/GoogleNetworkingUtilities/Frameworks\"",
 					"\"${PODS_ROOT}/GoogleSymbolUtilities/Frameworks\"",
 					"\"${PODS_ROOT}/GoogleUtilities/Frameworks\"",
-					"/Users/advaypal/Documents/FacebookSDKs-iOS-4.13.1",
+					"/Users/Shailesh/Documents/FacebookSDKs-iOS-4",
 				);
 				INFOPLIST_FILE = "My App/Info.plist";
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks";
@@ -640,7 +644,7 @@
 					"\"${PODS_ROOT}/GoogleNetworkingUtilities/Frameworks\"",
 					"\"${PODS_ROOT}/GoogleSymbolUtilities/Frameworks\"",
 					"\"${PODS_ROOT}/GoogleUtilities/Frameworks\"",
-					"/Users/advaypal/Documents/FacebookSDKs-iOS-4.13.1",
+					"/Users/Shailesh/Documents/FacebookSDKs-iOS-4",
 				);
 				INFOPLIST_FILE = "My App/Info.plist";
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks";
