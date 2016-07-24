@@ -20,10 +20,10 @@ class ChatViewController: JSQMessagesViewController {
     
     override func collectionView(collectionView: JSQMessagesCollectionView!,
                                  messageBubbleImageDataForItemAtIndexPath indexPath: NSIndexPath!) -> JSQMessageBubbleImageDataSource! {
-        let message = messages[indexPath.item] // 1
-        if message.senderId == senderId { // 2
+        let message = messages[indexPath.item]
+        if message.senderId == senderId {
             return outgoingBubbleImageView
-        } else { // 3
+        } else {
             return incomingBubbleImageView
         }
     }
@@ -76,17 +76,17 @@ class ChatViewController: JSQMessagesViewController {
     override func didPressSendButton(button: UIButton!, withMessageText text: String!, senderId: String!,
                                      senderDisplayName: String!, date: NSDate!) {
         
-        let itemRef = messagesRef.childByAutoId() // 1
-        let messageItem = [ // 2
+        let itemRef = messagesRef.childByAutoId()
+        let messageItem = [
             "text": text,
             "senderId": senderId
         ]
-        itemRef.setValue(messageItem) // 3
+        itemRef.setValue(messageItem)
         
-        // 4
+        
         JSQSystemSoundPlayer.jsq_playMessageSentSound()
         
-        // 5
+        
         finishSendingMessage()
     }
     
@@ -103,18 +103,18 @@ class ChatViewController: JSQMessagesViewController {
     
     
     private func observeMessages() {
-        // 1
+        
         let messagesQuery = messagesRef.queryLimitedToLast(25)
-        // 2
+        
         messagesQuery.observeEventType(.ChildAdded) { (snapshot: FIRDataSnapshot!) in
-            // 3
+            
             let id = snapshot.value?["senderId"] as! String
             let text = snapshot.value?["text"] as! String
             
-            // 4
+            
             self.addMessage(id, text: text)
             
-            // 5
+            
             self.finishReceivingMessage()
         }
     }
