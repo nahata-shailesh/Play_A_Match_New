@@ -30,8 +30,7 @@ class NewsFeedTableViewController: UITableViewController {
     
     let databaseRef = FIRDatabase.database().reference()
     let currentUser = FIRAuth.auth()?.currentUser
-    var eventsDict = [String: AnyObject]()
-    var objectArray = [[AnyObject]]()
+    var objectArray = [[String : String]]()
 
     // Alternative to segueing directly from the storyboard
     
@@ -45,16 +44,13 @@ class NewsFeedTableViewController: UITableViewController {
     override func viewDidLoad() {
         super.viewDidLoad()
         dispatch_async(dispatch_get_main_queue()) {
-            self.databaseRef.child("events").observeEventType(FIRDataEventType.Value, withBlock: { (snapshot) in
-                self.objectArray = []
-                // todo: what if snapshot is null
-                self.eventsDict = (snapshot.value as? [String : AnyObject])!
-                for (key, value) in self.eventsDict {
-                    let dict = value as! NSDictionary
-                    self.objectArray.append([key, dict])
-                }
+            self.databaseRef.child("events").observeEventType(.ChildAdded) { (snapshot: FIRDataSnapshot!) in
+                let dict = (snapshot.value as? [String : String])!
+                print(dict)
+                self.objectArray.append(dict)
+                
                 self.tableView.reloadData()
-            })
+            }
  
         }
         // Uncomment the following line to preserve selection between presentations
@@ -83,11 +79,12 @@ class NewsFeedTableViewController: UITableViewController {
 
     override func tableView(tableView: UITableView, cellForRowAtIndexPath indexPath: NSIndexPath) -> UITableViewCell {
         let data = self.objectArray[indexPath.row]
+        print(data)
         let dequeued:AnyObject = tableView.dequeueReusableCellWithIdentifier("Event Cell", forIndexPath: indexPath)
         let cell = dequeued as! UITableViewCell
         //display name of event, type, and time
-        cell.textLabel?.text = data[0] as? String
-        cell.detailTextLabel?.text = data[1].objectForKey("time") as? String
+        cell.textLabel?.text = data["activity"]
+        cell.detailTextLabel?.text = data["time"]
         return cell
     }
 

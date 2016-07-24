@@ -14,6 +14,6 @@ public class TextInputTableViewCell: UITableViewCell {
     
     public func configure(text: String?, placeholder: String?) {
         TextField.text = text
-        TextField.placeholder = placeholder
+        TextField.placeholder = placeholder 
     }
 }
