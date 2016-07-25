@@ -55,7 +55,7 @@ class CreateEventViewController: UIViewController {
             }
             activity.child("author").setValue(currentUser!.uid)
             activity.child("id").setValue(activity.key)
-            activity.child("counter").setValue("0")
+            activity.child("counter").setValue(0)
             
             FIRDatabase.database().reference().child("user_profile").child(currentUser!.uid).child("MyEvents").child(eventId).setValue(eventId)
         }
