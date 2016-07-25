@@ -15,6 +15,12 @@ class EventDetailsTableViewController: UITableViewController {
     var eventDetails = [String:AnyObject]()
     var newArray=[String]()
     let databaseRef = FIRDatabase.database().reference()
+    
+    @IBOutlet weak var joinButton: UIButton!
+    
+    @IBOutlet weak var chatButton: UIBarButtonItem!
+    
+    
  //   var fields = ["location", "age", "number", "time"]
     
 //    func convert(about: NSArray) {
@@ -33,34 +39,93 @@ class EventDetailsTableViewController: UITableViewController {
     @IBOutlet weak var chatButton: UIBarButtonItem!
     
     @IBAction func didTapJoin(sender: UIButton) {
+        
+        let text = joinButton.currentTitle
+        var alertTitle = ""
+        var alertMessage = ""
         let eventId = self.eventDetails["id"] as! String
-        databaseRef.child("user_profile").child(currentUserId).child("JoinedEvents").child(eventId).setValue(eventId)
-        databaseRef.child("events").child(eventId).child("Users joined").child(currentUserId).setValue(currentUserId)
-        
-        databaseRef.child("events").child(eventId).observeEventType(FIRDataEventType.Value, withBlock: { (snapshot) in
-            let dict = snapshot.value! as! [String:AnyObject]
-                var count = NSNumberFormatter().numberFromString(dict["counter"]! as! String)!.integerValue
-                let number = NSNumberFormatter().numberFromString(dict["Number of people looking for"]! as! String)!.integerValue
-            if (count < number) {
+        if text == "Join Event" {
+            alertTitle = "Congratulations!"
+            alertMessage = "You have joined this event"
+            databaseRef.child("user_profile").child(currentUserId).child("JoinedEvents").child(eventId).setValue(eventId)
+            databaseRef.child("events").child(eventId).child("Users joined").child(currentUserId).setValue(currentUserId)
+            
+            databaseRef.child("events").child(eventId).observeEventType(FIRDataEventType.Value, withBlock: { (snapshot) in
+                let dict = snapshot.value! as! [String:AnyObject]
+                var count = dict["counter"] as! Int
+                var number = dict["Number of people looking for"] as! Int
+                if (count < number) {
+                    count = count + 1
+                    self.databaseRef.child("events").child(eventId).child("counter").setValue("\(count)")
+                }
                 
-                count = count + 1
-                self.databaseRef.child("events").child(eventId).child("counter").setValue("\(count)")
-            }
+                
+                
+            })
+        }
+        else if text == "Leave Event" {
+            var bool1 = databaseRef.child("user_profile").child(currentUserId).child("JoinedEvents").child(eventId).removeValue
+            var bool2 = databaseRef.child("events").child(eventId).child("Users joined").child(currentUserId).removeValue
+            alertTitle = "Action Successful"
+            alertMessage = "You have left this event"
             
-        })
             
+        }
+        else if text == "Delete Event" {
+            var bool1 = databaseRef.child("events").child(currentUserId).child(eventId).removeValue
+            alertTitle = "Action Successful"
+            alertMessage = "You have deleted this event"
+
+        }
+        else if text == "This event is full" {
+            
+        }
         
-        print ("Button touched")
+        var alert = UIAlertController(title: alertTitle,
+                                      message: alertMessage,
+                                      preferredStyle: UIAlertControllerStyle.Alert)
+        
+        alert.addAction(UIAlertAction(title: "OK",
+            style: .Default)
+        { (action: UIAlertAction) -> Void in
+            let mainStoryBoard: UIStoryboard = UIStoryboard(name: "Main", bundle: nil)
+            let tableViewController: UIViewController = mainStoryBoard.instantiateViewControllerWithIdentifier("NewsFeed")
+            self.presentViewController(tableViewController, animated: true, completion: nil)
+            
+            }
+        )
+        
+        presentViewController(alert, animated: true, completion: nil)
     }
+
     override func viewDidLoad() {
         super.viewDidLoad()
-        
         for(key, value) in self.eventDetails {
             if(key != "author" && key != "id" && key != "counter" && key != "Users joined") {
-                var text = value as! String
-                newArray.append(key + ": "+text);
+                if(key != "counter" && key != "Number of people looking for") {
+                    let text = value as! String
+                    newArray.append(key + ": "+text)
+                } else {
+                    let text = value as! Int
+                    newArray.append(key + ": \(text)")
+                }
             }
         }
+        let count = eventDetails["counter"] as! Int
+        let num = eventDetails["Number of people looking for"] as! Int
+        let joinedUsers = eventDetails["Users joined"] as! [String: String]
+        if(currentUserId == (eventDetails["author"] as! String)) {
+            joinButton.setTitle("Delete Event", forState: UIControlState.Normal)
+        } else if(count < num){
+            if(joinedUsers[currentUserId] == nil) {
+                joinButton.setTitle("Join Event", forState: UIControlState.Normal)
+            } else {
+                joinButton.setTitle("Leave Event", forState: UIControlState.Normal)
+            }
+        } else {
+            joinButton.setTitle("This event is full.", forState: UIControlState.Normal)
+        }
+
      
         /**
         dispatch_async(dispatch_get_main_queue()) {

@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="UTF-8" standalone="no"?>
-<document type="com.apple.InterfaceBuilder3.CocoaTouch.Storyboard.XIB" version="3.0" toolsVersion="10117" systemVersion="15D21" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES" initialViewController="BYZ-38-t0r">
+<document type="com.apple.InterfaceBuilder3.CocoaTouch.Storyboard.XIB" version="3.0" toolsVersion="10117" systemVersion="15F34" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES" initialViewController="BYZ-38-t0r">
     <dependencies>
         <deployment identifier="iOS"/>
         <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="10085"/>
@@ -66,7 +66,7 @@
         <!--News Feed-->
         <scene sceneID="cR8-fi-g2I">
             <objects>
-                <tableViewController storyboardIdentifier="TableView" id="be7-FN-1y9" customClass="NewsFeedTableViewController" customModule="My_App" customModuleProvider="target" sceneMemberID="viewController">
+                <tableViewController storyboardIdentifier="NewsFeed" id="be7-FN-1y9" customClass="NewsFeedTableViewController" customModule="My_App" customModuleProvider="target" sceneMemberID="viewController">
                     <tableView key="view" clipsSubviews="YES" contentMode="scaleToFill" alwaysBounceVertical="YES" dataMode="prototypes" style="plain" separatorStyle="default" rowHeight="44" sectionHeaderHeight="28" sectionFooterHeight="28" id="Gcu-IT-mrm">
                         <rect key="frame" x="0.0" y="0.0" width="600" height="600"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
@@ -160,7 +160,7 @@
                                         <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="tk8-Kw-KOJ">
                                             <rect key="frame" x="8" y="8" width="584" height="27"/>
                                             <fontDescription key="fontDescription" type="system" pointSize="17"/>
-                                            <color key="textColor" cocoaTouchSystemColor="darkTextColor"/>
+                                            <color key="textColor" red="0.0" green="0.0" blue="0.0" alpha="1" colorSpace="calibratedRGB"/>
                                             <nil key="highlightedColor"/>
                                         </label>
                                     </subviews>
@@ -196,8 +196,8 @@
                         </barButtonItem>
                     </navigationItem>
                     <connections>
-                        <outlet property="chatButton" destination="7rK-ho-Yhu" id="wlP-Ap-lVm"/>
-                        <outlet property="joinButton" destination="3el-Kx-KNo" id="WEx-8y-hzR"/>
+                        <outlet property="chatButton" destination="7rK-ho-Yhu" id="B7z-Qr-DLy"/>
+                        <outlet property="joinButton" destination="3el-Kx-KNo" id="f7K-vm-r5U"/>
                         <segue destination="h5Q-h4-ff2" kind="unwind" identifier="unwindToNews" unwindAction="unwindToNewsFeed:" id="kZI-a2-A7C"/>
                     </connections>
                 </tableViewController>

@@ -104,9 +104,6 @@ class NewsFeedTableViewController: UITableViewController {
             data = filteredTexts[indexPath.row]
         } else {
             data = objectArray[indexPath.row]
-            print("lalala")
-            print(objectArray)
-            print(data)
         }
         //display name of event, type, and time
     
