@@ -19,6 +19,7 @@ class CreateEventViewController: UIViewController {
     @IBAction func doneButtonTapped(sender: UIButton) {
         let activity = databaseRef.childByAutoId()
         let eventId = activity.key
+        var areAllTextFieldsFilled = true
         //iterate through text fields
         var i = 0 //
         
@@ -36,28 +37,28 @@ class CreateEventViewController: UIViewController {
                     //do nothing
                 }
             )
-                
+            areAllTextFieldsFilled = false
             presentViewController(alert, animated: true, completion: nil)
+            break
         }
         i = i + 1
     }
+        if areAllTextFieldsFilled {
         
-        i = 0
-        while i < textFields.count {
-            //text fields have been assigned with viewTags which start with 1
-            let textFieldValue = self.view.viewWithTag(i+1) as! UITextField
-            let item = textFieldValue.text
-            activity.child("\(self.textFields[i])").setValue(item)
-            i = i + 1
+            i = 0
+            while i < textFields.count {
+                //text fields have been assigned with viewTags which start with 1
+                let textFieldValue = self.view.viewWithTag(i+1) as! UITextField
+                let item = textFieldValue.text
+                activity.child("\(self.textFields[i])").setValue(item)
+                i = i + 1
+            }
+            activity.child("author").setValue(currentUser!.uid)
+            activity.child("id").setValue(activity.key)
+            activity.child("counter").setValue("0")
+            
+            FIRDatabase.database().reference().child("user_profile").child(currentUser!.uid).child("MyEvents").child(eventId).setValue(eventId)
         }
-        activity.child("author").setValue(currentUser!.uid)
-        activity.child("id").setValue(activity.key)
-        activity.child("counter").setValue("0")
-        
-        FIRDatabase.database().reference().child("user_profile").child(currentUser!.uid).child("MyEvents").child(eventId).setValue(eventId)
-        
-
-
         // go back to event feed
         self.performSegueWithIdentifier("unwindToEvent", sender: self)
     }
