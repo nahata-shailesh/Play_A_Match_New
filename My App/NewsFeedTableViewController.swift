@@ -32,13 +32,13 @@ class NewsFeedTableViewController: UITableViewController {
     
     let databaseRef = FIRDatabase.database().reference()
     let currentUser = FIRAuth.auth()?.currentUser
-    var objectArray = [[AnyObject]]()
-    var filteredTexts = [AnyObject]()
+    var objectArray = [[String: String]]()
+    var filteredTexts = [[String: String]]()
    
     
     func filterContentForSearchText(searchText: String, scope: String = "All") {
         filteredTexts = objectArray.filter { event in
-            return event[0].lowercaseString.containsString(searchText.lowercaseString)
+            return event["Activity Name"]!.lowercaseString.containsString(searchText.lowercaseString)
         }
         tableView.reloadData()
     }
@@ -58,7 +58,7 @@ class NewsFeedTableViewController: UITableViewController {
         dispatch_async(dispatch_get_main_queue()) {
             self.databaseRef.child("events").observeEventType(.ChildAdded) { (snapshot: FIRDataSnapshot!) in
                 let dict = (snapshot.value as! [String : String])
-                print(dict)
+                print (dict)
                 self.objectArray.append(dict)
                 self.tableView.reloadData()
             }
@@ -96,18 +96,18 @@ class NewsFeedTableViewController: UITableViewController {
     }
 
     override func tableView(tableView: UITableView, cellForRowAtIndexPath indexPath: NSIndexPath) -> UITableViewCell {
-        var data = [AnyObject]()
+        var data = [String: String]()
         let dequeued:AnyObject = tableView.dequeueReusableCellWithIdentifier("Event Cell", forIndexPath: indexPath)
         let cell = dequeued as! UITableViewCell
         
         if searchController.active && searchController.searchBar.text != "" {
-            data = filteredTexts[indexPath.row] as! [AnyObject]
+            data = filteredTexts[indexPath.row]
         } else {
             data = objectArray[indexPath.row]
         }
         //display name of event, type, and time
-        cell.textLabel?.text = data["activity"]
-        cell.detailTextLabel?.text = data["time"]
+        cell.textLabel?.text = data["Activity Name"]
+        cell.detailTextLabel?.text = data["Suggested Time"]
         return cell
     }
     

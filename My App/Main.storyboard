@@ -290,12 +290,12 @@
                         <rect key="frame" x="0.0" y="0.0" width="600" height="600"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                         <subviews>
-                            <textField opaque="NO" clipsSubviews="YES" tag="1" contentMode="scaleToFill" contentHorizontalAlignment="left" contentVerticalAlignment="center" borderStyle="roundedRect" textAlignment="natural" minimumFontSize="17" translatesAutoresizingMaskIntoConstraints="NO" id="eTa-N1-pO7">
+                            <textField opaque="NO" clipsSubviews="YES" tag="2" contentMode="scaleToFill" contentHorizontalAlignment="left" contentVerticalAlignment="center" borderStyle="roundedRect" textAlignment="natural" minimumFontSize="17" translatesAutoresizingMaskIntoConstraints="NO" id="eTa-N1-pO7">
                                 <rect key="frame" x="175" y="147" width="405" height="30"/>
                                 <fontDescription key="fontDescription" type="system" pointSize="14"/>
                                 <textInputTraits key="textInputTraits"/>
                             </textField>
-                            <textField opaque="NO" clipsSubviews="YES" tag="2" contentMode="scaleToFill" contentHorizontalAlignment="left" contentVerticalAlignment="center" borderStyle="roundedRect" textAlignment="natural" minimumFontSize="17" translatesAutoresizingMaskIntoConstraints="NO" id="FhS-ot-wTH">
+                            <textField opaque="NO" clipsSubviews="YES" tag="3" contentMode="scaleToFill" contentHorizontalAlignment="left" contentVerticalAlignment="center" borderStyle="roundedRect" textAlignment="natural" minimumFontSize="17" translatesAutoresizingMaskIntoConstraints="NO" id="FhS-ot-wTH">
                                 <rect key="frame" x="175" y="185" width="405" height="30"/>
                                 <fontDescription key="fontDescription" type="system" pointSize="14"/>
                                 <textInputTraits key="textInputTraits"/>
@@ -328,7 +328,7 @@
                                 <color key="textColor" red="0.0" green="0.0" blue="0.0" alpha="1" colorSpace="calibratedRGB"/>
                                 <nil key="highlightedColor"/>
                             </label>
-                            <textField opaque="NO" clipsSubviews="YES" tag="3" contentMode="scaleToFill" contentHorizontalAlignment="left" contentVerticalAlignment="center" borderStyle="roundedRect" textAlignment="natural" minimumFontSize="17" translatesAutoresizingMaskIntoConstraints="NO" id="0Gp-Ay-pne">
+                            <textField opaque="NO" clipsSubviews="YES" tag="4" contentMode="scaleToFill" contentHorizontalAlignment="left" contentVerticalAlignment="center" borderStyle="roundedRect" textAlignment="natural" minimumFontSize="17" translatesAutoresizingMaskIntoConstraints="NO" id="0Gp-Ay-pne">
                                 <rect key="frame" x="175" y="223" width="405" height="30"/>
                                 <fontDescription key="fontDescription" type="system" pointSize="14"/>
                                 <textInputTraits key="textInputTraits"/>
@@ -345,12 +345,12 @@
                                 <color key="textColor" red="0.0" green="0.0" blue="0.0" alpha="1" colorSpace="calibratedRGB"/>
                                 <nil key="highlightedColor"/>
                             </label>
-                            <textField opaque="NO" clipsSubviews="YES" tag="4" contentMode="scaleToFill" contentHorizontalAlignment="left" contentVerticalAlignment="center" borderStyle="roundedRect" textAlignment="natural" minimumFontSize="17" translatesAutoresizingMaskIntoConstraints="NO" id="jbN-Cd-pFz">
+                            <textField opaque="NO" clipsSubviews="YES" tag="5" contentMode="scaleToFill" contentHorizontalAlignment="left" contentVerticalAlignment="center" borderStyle="roundedRect" textAlignment="natural" minimumFontSize="17" translatesAutoresizingMaskIntoConstraints="NO" id="jbN-Cd-pFz">
                                 <rect key="frame" x="175" y="261" width="405" height="30"/>
                                 <fontDescription key="fontDescription" type="system" pointSize="14"/>
                                 <textInputTraits key="textInputTraits"/>
                             </textField>
-                            <textField opaque="NO" clipsSubviews="YES" tag="5" contentMode="scaleToFill" contentHorizontalAlignment="left" contentVerticalAlignment="center" borderStyle="roundedRect" textAlignment="natural" minimumFontSize="17" translatesAutoresizingMaskIntoConstraints="NO" id="6Jc-cV-N8d">
+                            <textField opaque="NO" clipsSubviews="YES" tag="6" contentMode="scaleToFill" contentHorizontalAlignment="left" contentVerticalAlignment="center" borderStyle="roundedRect" textAlignment="natural" minimumFontSize="17" translatesAutoresizingMaskIntoConstraints="NO" id="6Jc-cV-N8d">
                                 <rect key="frame" x="175" y="299" width="405" height="30"/>
                                 <fontDescription key="fontDescription" type="system" pointSize="14"/>
                                 <textInputTraits key="textInputTraits"/>
@@ -418,7 +418,7 @@
                             <constraint firstAttribute="trailingMargin" secondItem="Bq4-HL-Kag" secondAttribute="trailing" id="Tjc-Pc-b8k"/>
                             <constraint firstItem="eTa-N1-pO7" firstAttribute="leading" secondItem="f9B-wf-YZ6" secondAttribute="trailing" constant="8" symbolic="YES" id="V6V-gi-caF"/>
                             <constraint firstItem="FhS-ot-wTH" firstAttribute="top" secondItem="eTa-N1-pO7" secondAttribute="bottom" constant="8" symbolic="YES" id="VGh-4g-Yjp"/>
-                            <constraint firstItem="6Jc-cV-N8d" firstAttribute="top" secondItem="jbN-Cd-pFz" secondAttribute="bottom" constant="8" id="WEq-1x-9Hg"/>
+                            <constraint firstItem="6Jc-cV-N8d" firstAttribute="top" secondItem="jbN-Cd-pFz" secondAttribute="bottom" constant="8" symbolic="YES" id="WEq-1x-9Hg"/>
                             <constraint firstItem="eTa-N1-pO7" firstAttribute="top" secondItem="Bq4-HL-Kag" secondAttribute="bottom" constant="8" symbolic="YES" id="YYZ-fO-f4u"/>
                             <constraint firstItem="6cg-KZ-Zbo" firstAttribute="top" secondItem="f9B-wf-YZ6" secondAttribute="bottom" constant="38" id="ZBW-pa-sGg"/>
                             <constraint firstAttribute="leadingMargin" secondItem="ggd-z1-LY0" secondAttribute="leading" id="ZRg-mF-DPL"/>
@@ -432,7 +432,7 @@
                             <constraint firstAttribute="trailingMargin" secondItem="eTa-N1-pO7" secondAttribute="trailing" id="kp1-Yl-Tpx"/>
                             <constraint firstItem="jbN-Cd-pFz" firstAttribute="leading" secondItem="ggd-z1-LY0" secondAttribute="trailing" constant="8" symbolic="YES" id="lj4-2D-29Y"/>
                             <constraint firstAttribute="leadingMargin" secondItem="f9B-wf-YZ6" secondAttribute="leading" id="lm1-k1-7fY"/>
-                            <constraint firstItem="jbN-Cd-pFz" firstAttribute="top" secondItem="0Gp-Ay-pne" secondAttribute="bottom" constant="8" id="q44-k8-TVV"/>
+                            <constraint firstItem="jbN-Cd-pFz" firstAttribute="top" secondItem="0Gp-Ay-pne" secondAttribute="bottom" constant="8" symbolic="YES" id="q44-k8-TVV"/>
                             <constraint firstItem="f9B-wf-YZ6" firstAttribute="centerY" secondItem="eTa-N1-pO7" secondAttribute="centerY" id="qXe-S1-30e"/>
                             <constraint firstItem="Hcw-zU-U7A" firstAttribute="top" secondItem="6cg-KZ-Zbo" secondAttribute="bottom" constant="8" symbolic="YES" id="uN3-lT-fKb"/>
                             <constraint firstItem="Bq4-HL-Kag" firstAttribute="centerX" secondItem="eTa-N1-pO7" secondAttribute="centerX" id="vYw-Jj-yYg"/>

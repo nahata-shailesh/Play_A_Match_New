@@ -12,7 +12,7 @@ import FirebaseAuth
 
 class CreateEventViewController: UIViewController {
     
-    let textFields = ["Activity Name", "Suggested Time", "Targetted Age Group", "Number of people looking for", "Location"]
+    let textFields = ["Activity Name", "Date", "Suggested Time", "Targetted Age Group", "Number of people looking for", "Location"]
     let databaseRef = FIRDatabase.database().reference().child("events")
     let currentUser = FIRAuth.auth()?.currentUser
     
@@ -30,9 +30,9 @@ class CreateEventViewController: UIViewController {
         }
         activity.child("author").setValue(currentUser!.uid)
         activity.child("id").setValue(activity.key)
-        activity.child("counter").setValue(0)
-        databaseRef.child("user_profile").child(currentUser!.uid).child("MyEvents").child(eventId).setValue(eventId)
-        databaseRef.child("user_profile").child(currentUser!.uid).child("JoinedEvents").child(eventId).setValue(eventId)        // go back to event feed
+        activity.child("counter").setValue("0")
+        FIRDatabase.database().reference().child("user_profile").child(currentUser!.uid).child("MyEvents").child(eventId).setValue(eventId)
+        FIRDatabase.database().reference().child("user_profile").child(currentUser!.uid).child("JoinedEvents").child(eventId).setValue(eventId)        // go back to event feed
         self.performSegueWithIdentifier("unwindToEvent", sender: self)
     }
     
@@ -40,21 +40,21 @@ class CreateEventViewController: UIViewController {
         super.viewDidLoad()
         // Do any additional setup after loading the view.
     }
-
+    
     override func didReceiveMemoryWarning() {
         super.didReceiveMemoryWarning()
         // Dispose of any resources that can be recreated.
     }
     
-
+    
     /*
-    // MARK: - Navigation
-
-    // In a storyboard-based application, you will often want to do a little preparation before navigation
-    override func prepareForSegue(segue: UIStoryboardSegue, sender: AnyObject?) {
-        // Get the new view controller using segue.destinationViewController.
-        // Pass the selected object to the new view controller.
-    }
-    */
-
+     // MARK: - Navigation
+     
+     // In a storyboard-based application, you will often want to do a little preparation before navigation
+     override func prepareForSegue(segue: UIStoryboardSegue, sender: AnyObject?) {
+     // Get the new view controller using segue.destinationViewController.
+     // Pass the selected object to the new view controller.
+     }
+     */
+    
 }
