@@ -196,6 +196,8 @@
                         </barButtonItem>
                     </navigationItem>
                     <connections>
+                        <outlet property="chatButton" destination="7rK-ho-Yhu" id="wlP-Ap-lVm"/>
+                        <outlet property="joinButton" destination="3el-Kx-KNo" id="WEx-8y-hzR"/>
                         <segue destination="h5Q-h4-ff2" kind="unwind" identifier="unwindToNews" unwindAction="unwindToNewsFeed:" id="kZI-a2-A7C"/>
                     </connections>
                 </tableViewController>

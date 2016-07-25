@@ -28,15 +28,19 @@ class EventDetailsTableViewController: UITableViewController {
 //        
 //    }
 
+    
+    @IBOutlet weak var joinButton: UIButton!
+    @IBOutlet weak var chatButton: UIBarButtonItem!
+    
     @IBAction func didTapJoin(sender: UIButton) {
         let eventId = self.eventDetails["id"] as! String
         databaseRef.child("user_profile").child(currentUserId).child("JoinedEvents").child(eventId).setValue(eventId)
         databaseRef.child("events").child(eventId).child("Users joined").child(currentUserId).setValue(currentUserId)
         
         databaseRef.child("events").child(eventId).observeEventType(FIRDataEventType.Value, withBlock: { (snapshot) in
-            let dict = snapshot.value! as! [String:String]
-                var count = NSNumberFormatter().numberFromString(dict["counter"]!)!.integerValue
-                let number = NSNumberFormatter().numberFromString(dict["Number of people looking for"]!)!.integerValue
+            let dict = snapshot.value! as! [String:AnyObject]
+                var count = NSNumberFormatter().numberFromString(dict["counter"]! as! String)!.integerValue
+                let number = NSNumberFormatter().numberFromString(dict["Number of people looking for"]! as! String)!.integerValue
             if (count < number) {
                 
                 count = count + 1
