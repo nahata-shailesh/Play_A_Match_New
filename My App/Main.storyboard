@@ -207,7 +207,7 @@
         <!--Chat View Controller-->
         <scene sceneID="fGY-jF-raG">
             <objects>
-                <viewController id="oPX-ZH-xxv" customClass="ChatViewController" customModule="My_App" customModuleProvider="target" sceneMemberID="viewController">
+                <viewController hidesBottomBarWhenPushed="YES" id="oPX-ZH-xxv" customClass="ChatViewController" customModule="My_App" customModuleProvider="target" sceneMemberID="viewController">
                     <layoutGuides>
                         <viewControllerLayoutGuide type="top" id="Mt3-bI-0DL"/>
                         <viewControllerLayoutGuide type="bottom" id="BQ8-c0-T09"/>
@@ -496,6 +496,10 @@
                         <color key="barTintColor" red="0.0" green="0.47843137250000001" blue="1" alpha="1" colorSpace="calibratedRGB"/>
                     </navigationBar>
                     <nil name="viewControllers"/>
+                    <toolbar key="toolbar" opaque="NO" clearsContextBeforeDrawing="NO" contentMode="scaleToFill" id="0DD-EP-NMy">
+                        <rect key="frame" x="0.0" y="556" width="600" height="44"/>
+                        <autoresizingMask key="autoresizingMask"/>
+                    </toolbar>
                     <connections>
                         <segue destination="be7-FN-1y9" kind="relationship" relationship="rootViewController" id="KX8-9o-3VD"/>
                     </connections>

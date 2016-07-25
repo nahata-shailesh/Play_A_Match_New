@@ -21,6 +21,28 @@ class CreateEventViewController: UIViewController {
         let eventId = activity.key
         //iterate through text fields
         var i = 0 //
+        
+        // loop for alert presentation
+        while i < textFields.count {
+            let textFieldValue = self.view.viewWithTag(i+1) as! UITextField
+            if textFieldValue.text == "" {
+                var alert = UIAlertController(title: "Incomplete Event",
+                message: "Please fill in all the textfields",
+                preferredStyle: UIAlertControllerStyle.Alert)
+                
+                alert.addAction(UIAlertAction(title: "OK",
+                style: .Cancel)
+                { (action: UIAlertAction) -> Void in
+                    //do nothing
+                }
+            )
+                
+            presentViewController(alert, animated: true, completion: nil)
+        }
+        i = i + 1
+    }
+        
+        i = 0
         while i < textFields.count {
             //text fields have been assigned with viewTags which start with 1
             let textFieldValue = self.view.viewWithTag(i+1) as! UITextField
