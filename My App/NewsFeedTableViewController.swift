@@ -13,9 +13,10 @@ import FirebaseDatabase
 
 class NewsFeedTableViewController: UITableViewController {
     var about = []
+    let searchController = UISearchController(searchResultsController: nil)
     
     @IBAction func unwindToEventsPage(segue: UIStoryboardSegue) {}
-    @IBAction func unwindToNewsFeed(segue: UIStoryboardSegue) {}
+
 
     @IBAction func didTapLogout(sender: UIBarButtonItem) {
         // signs the user out of the firebase app
@@ -34,7 +35,16 @@ class NewsFeedTableViewController: UITableViewController {
     let currentUser = FIRAuth.auth()?.currentUser
     var eventsDict = [String: AnyObject]()
     var objectArray = [[AnyObject]]()
-
+    var filteredTexts = [AnyObject]()
+   
+    
+    func filterContentForSearchText(searchText: String, scope: String = "All") {
+        filteredTexts = objectArray.filter { event in
+            return event[0].lowercaseString.containsString(searchText.lowercaseString)
+        }
+        tableView.reloadData()
+    }
+    
     // Alternative to segueing directly from the storyboard
     
 //    @IBAction func didTapCreateButton(sender: UIBarButtonItem) {
@@ -57,6 +67,12 @@ class NewsFeedTableViewController: UITableViewController {
                 }
                 self.tableView.reloadData()
             })
+            
+            self.searchController.searchResultsUpdater = self
+            self.searchController.dimsBackgroundDuringPresentation = false
+            self.definesPresentationContext = true
+            self.tableView.tableHeaderView = self.searchController.searchBar
+          
  
         }
         // Uncomment the following line to preserve selection between presentations
@@ -79,14 +95,22 @@ class NewsFeedTableViewController: UITableViewController {
     }
 
     override func tableView(tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
-        // #warning Incomplete implementation, return the number of rows
+        if searchController.active && searchController.searchBar.text != "" {
+            return filteredTexts.count
+        }
         return self.objectArray.count
     }
 
     override func tableView(tableView: UITableView, cellForRowAtIndexPath indexPath: NSIndexPath) -> UITableViewCell {
-        let data = self.objectArray[indexPath.row]
+        var data = [AnyObject]()
         let dequeued:AnyObject = tableView.dequeueReusableCellWithIdentifier("Event Cell", forIndexPath: indexPath)
         let cell = dequeued as! UITableViewCell
+        
+        if searchController.active && searchController.searchBar.text != "" {
+            data = filteredTexts[indexPath.row] as! [AnyObject]
+        } else {
+            data = objectArray[indexPath.row]
+        }
         //display name of event, type, and time
         cell.textLabel?.text = data[0] as? String
         cell.detailTextLabel?.text = data[1].objectForKey("time") as? String
@@ -117,6 +141,11 @@ class NewsFeedTableViewController: UITableViewController {
     }
 }
 
+extension NewsFeedTableViewController: UISearchResultsUpdating {
+    func updateSearchResultsForSearchController(searchController: UISearchController) {
+        filterContentForSearchText(searchController.searchBar.text!)
+    }
+}
 
     /*
     // Override to support conditional editing of the table view.

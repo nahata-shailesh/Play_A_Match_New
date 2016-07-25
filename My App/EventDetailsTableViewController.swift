@@ -25,10 +25,7 @@ class EventDetailsTableViewController: UITableViewController {
 //        print(newArray)
 //        
 //    }
-    @IBAction func backButtonPressed(sender: UIButton) {
-        self.performSegueWithIdentifier("unwindToNews", sender: self)
-    }
-    
+
     @IBAction func didTapJoin(sender: UIButton) {
         print ("Button touched")
     }
@@ -89,6 +86,14 @@ class EventDetailsTableViewController: UITableViewController {
         return cell
     }
     
+    override func prepareForSegue(segue: UIStoryboardSegue, sender: AnyObject?) {
+        var destination = segue.destinationViewController as UIViewController
+        if let chatVC = destination as? ChatViewController {
+            if segue.identifier == "goToChatView" {
+                //implement sending data here
+            }
+        }
+    }
 
     /*
     // Override to support conditional editing of the table view.
