@@ -13,21 +13,26 @@ import FirebaseAuth
 class CreateEventViewController: UIViewController {
     
     let textFields = ["Activity Name", "Suggested Time", "Targetted Age Group", "Number of people looking for", "Location"]
-    let databaseRef = FIRDatabase.database().reference()
+    let databaseRef = FIRDatabase.database().reference().child("events")
     let currentUser = FIRAuth.auth()?.currentUser
     
     @IBAction func doneButtonTapped(sender: UIButton) {
-        let activity = (self.view.viewWithTag(1) as! UITextField).text
+        let activity = databaseRef.childByAutoId()
+        let eventId = activity.key
         //iterate through text fields
-        var i = 1 //
+        var i = 0 //
         while i < textFields.count {
             //text fields have been assigned with viewTags which start with 1
             let textFieldValue = self.view.viewWithTag(i+1) as! UITextField
             let item = textFieldValue.text
-            self.databaseRef.child("events").child("\(activity!)/\(self.textFields[i])").setValue(item)
+            activity.child("\(self.textFields[i])").setValue(item)
             i = i + 1
         }
-        // go back to event feed
+        activity.child("author").setValue(currentUser!.uid)
+        activity.child("id").setValue(activity.key)
+        activity.child("counter").setValue(0)
+        databaseRef.child("user_profile").child(currentUser!.uid).child("MyEvents").child(eventId).setValue(eventId)
+        databaseRef.child("user_profile").child(currentUser!.uid).child("JoinedEvents").child(eventId).setValue(eventId)        // go back to event feed
         self.performSegueWithIdentifier("unwindToEvent", sender: self)
     }
     

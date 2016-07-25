@@ -12,7 +12,6 @@ import FirebaseAuth
 import FirebaseDatabase
 
 class NewsFeedTableViewController: UITableViewController {
-    var about = []
     let searchController = UISearchController(searchResultsController: nil)
     
     @IBAction func unwindToEventsPage(segue: UIStoryboardSegue) {}
@@ -33,7 +32,6 @@ class NewsFeedTableViewController: UITableViewController {
     
     let databaseRef = FIRDatabase.database().reference()
     let currentUser = FIRAuth.auth()?.currentUser
-    var eventsDict = [String: AnyObject]()
     var objectArray = [[AnyObject]]()
     var filteredTexts = [AnyObject]()
    
@@ -56,25 +54,21 @@ class NewsFeedTableViewController: UITableViewController {
     
     override func viewDidLoad() {
         super.viewDidLoad()
+        
         dispatch_async(dispatch_get_main_queue()) {
-            self.databaseRef.child("events").observeEventType(FIRDataEventType.Value, withBlock: { (snapshot) in
-                self.objectArray = []
-                // todo: what if snapshot is null
-                self.eventsDict = (snapshot.value as? [String : AnyObject])!
-                for (key, value) in self.eventsDict {
-                    let dict = value as! NSDictionary
-                    self.objectArray.append([key, dict])
-                }
+            self.databaseRef.child("events").observeEventType(.ChildAdded) { (snapshot: FIRDataSnapshot!) in
+                let dict = (snapshot.value as! [String : String])
+                print(dict)
+                self.objectArray.append(dict)
                 self.tableView.reloadData()
-            })
-            
+            }
+         }
+		 
             self.searchController.searchResultsUpdater = self
             self.searchController.dimsBackgroundDuringPresentation = false
             self.definesPresentationContext = true
             self.tableView.tableHeaderView = self.searchController.searchBar
-          
- 
-        }
+        
         // Uncomment the following line to preserve selection between presentations
         // self.clearsSelectionOnViewWillAppear = false
 
@@ -112,8 +106,8 @@ class NewsFeedTableViewController: UITableViewController {
             data = objectArray[indexPath.row]
         }
         //display name of event, type, and time
-        cell.textLabel?.text = data[0] as? String
-        cell.detailTextLabel?.text = data[1].objectForKey("time") as? String
+        cell.textLabel?.text = data["activity"]
+        cell.detailTextLabel?.text = data["time"]
         return cell
     }
     
@@ -135,7 +129,7 @@ class NewsFeedTableViewController: UITableViewController {
         if let eventDetailsTVC = destination as? EventDetailsTableViewController {
             if (segue.identifier == "goToEventDetails") {
                 let indexPath: NSIndexPath = self.tableView.indexPathForSelectedRow!
-                eventDetailsTVC.about = self.objectArray[indexPath.row]
+                eventDetailsTVC.eventDetails = self.objectArray[indexPath.row]
             }
         }
     }

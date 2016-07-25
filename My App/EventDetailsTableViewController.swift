@@ -7,12 +7,14 @@
 //
 
 import UIKit
+import FirebaseAuth
+import FirebaseDatabase
 
 class EventDetailsTableViewController: UITableViewController {
-    
-    var about = []
-    var newArray = [String: AnyObject]()
-    var objArray = [(String, AnyObject)]()
+    let currentUserId = (FIRAuth.auth()?.currentUser!.uid)!
+    var eventDetails = [String:String]()
+    var newArray=[String]()
+    let databaseRef = FIRDatabase.database().reference()
  //   var fields = ["location", "age", "number", "time"]
     
 //    func convert(about: NSArray) {
@@ -27,32 +29,34 @@ class EventDetailsTableViewController: UITableViewController {
 //    }
 
     @IBAction func didTapJoin(sender: UIButton) {
+        let eventId = self.eventDetails["id"]!
+        databaseRef.child("user_profile").child(currentUserId).child("JoinedEvents").child(eventId).setValue(eventId)
+        databaseRef.child("events").child(eventId).child("Users joined").child(currentUserId).setValue(currentUserId)
         print ("Button touched")
     }
     override func viewDidLoad() {
         super.viewDidLoad()
         
-//        print (about)
-//        print (about[1].count)
-//        var ind = 0
-        
-        for item in about[1] as! [String: AnyObject] {
-            objArray.append(item)
+        for(key, value) in self.eventDetails {
+            if(key != "author" && key != "id") {
+                print(key)
+                newArray.append(key + ": "+value);
+            }
         }
      
-        
+        /**
         dispatch_async(dispatch_get_main_queue()) {
             var index = 0
-            while index < self.objArray.count {
+            for(key, value) in self.eventDetails {
                 
                 let indexPath = NSIndexPath(forRow: index, inSection: 0)
                 let cell: ProfileDetailsTableViewCell? = self.tableView.cellForRowAtIndexPath(indexPath) as! ProfileDetailsTableViewCell?
-                let sendString = (self.objArray[index].0 as? String)! + ": " + (self.objArray[index].1 as! String)
-                cell?.configure(sendString)
+                cell?.configure(key + ": "+value)
                 index += 1
                 //self.tableView.reloadData()
             }
         }
+        **/
         // Uncomment the following line to preserve selection between presentations
         // self.clearsSelectionOnViewWillAppear = false
         
@@ -74,14 +78,13 @@ class EventDetailsTableViewController: UITableViewController {
 
     override func tableView(tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
         // #warning Incomplete implementation, return the number of rows
-        return self.objArray.count
+        return self.newArray.count
     }
 
     
     override func tableView(tableView: UITableView, cellForRowAtIndexPath indexPath: NSIndexPath) -> UITableViewCell {
         let cell: ProfileDetailsTableViewCell = tableView.dequeueReusableCellWithIdentifier("Event Cell", forIndexPath: indexPath) as! ProfileDetailsTableViewCell
-        let sendString = (self.objArray[indexPath.row].0 as? String)! + ": " + (self.objArray[indexPath.row].1 as! String)
-        cell.configure(sendString)
+        cell.configure(newArray[indexPath.row])
         
         return cell
     }
