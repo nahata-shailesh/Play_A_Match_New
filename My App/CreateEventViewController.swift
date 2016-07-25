@@ -49,8 +49,15 @@ class CreateEventViewController: UIViewController {
             while i < textFields.count {
                 //text fields have been assigned with viewTags which start with 1
                 let textFieldValue = self.view.viewWithTag(i+1) as! UITextField
-                let item = textFieldValue.text
-                activity.child("\(self.textFields[i])").setValue(item)
+                if(i != 4) {
+                    let item = textFieldValue.text
+                    activity.child("\(self.textFields[i])").setValue(item)
+
+                } else {
+                    let item = NSNumberFormatter().numberFromString(textFieldValue.text!)?.integerValue
+                    activity.child("\(self.textFields[i])").setValue(item)
+
+                }
                 i = i + 1
             }
             activity.child("author").setValue(currentUser!.uid)
@@ -58,6 +65,7 @@ class CreateEventViewController: UIViewController {
             activity.child("counter").setValue(0)
             
             FIRDatabase.database().reference().child("user_profile").child(currentUser!.uid).child("MyEvents").child(eventId).setValue(eventId)
+                FIRDatabase.database().reference().child("events").child(eventId).child("Users joined").child(currentUser!.uid).setValue(currentUser!.uid)
         }
         // go back to event feed
         self.performSegueWithIdentifier("unwindToEvent", sender: self)
