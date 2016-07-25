@@ -50,6 +50,8 @@ class EventDetailsTableViewController: UITableViewController {
                 let dict = snapshot.value! as! [String:AnyObject]
                 var count = dict["counter"] as! Int
                 var number = dict["Number of people looking for"] as! Int
+                    //NSNumberFormatter().numberFromString(dict["Number of people looking for"] as! String)?.integerValue
+                
                 if (count < number) {
                     count = count + 1
                     self.databaseRef.child("events").child(eventId).child("counter").setValue("\(count)")
@@ -60,15 +62,15 @@ class EventDetailsTableViewController: UITableViewController {
             })
         }
         else if text == "Leave Event" {
-            var bool1 = databaseRef.child("user_profile").child(currentUserId).child("JoinedEvents").child(eventId).removeValue
-            var bool2 = databaseRef.child("events").child(eventId).child("Users joined").child(currentUserId).removeValue
+            databaseRef.child("user_profile").child(currentUserId).child("JoinedEvents").child(eventId).removeValue()
+            databaseRef.child("events").child(eventId).child("Users joined").child(currentUserId).removeValue()
             alertTitle = "Action Successful"
             alertMessage = "You have left this event"
             
             
         }
         else if text == "Delete Event" {
-            var bool1 = databaseRef.child("events").child(currentUserId).child(eventId).removeValue
+            var bool1 = databaseRef.child("events").child(currentUserId).child(eventId).removeValue()
             alertTitle = "Action Successful"
             alertMessage = "You have deleted this event"
 
@@ -84,10 +86,7 @@ class EventDetailsTableViewController: UITableViewController {
         alert.addAction(UIAlertAction(title: "OK",
             style: .Default)
         { (action: UIAlertAction) -> Void in
-            let mainStoryBoard: UIStoryboard = UIStoryboard(name: "Main", bundle: nil)
-            let tableViewController: UIViewController = mainStoryBoard.instantiateViewControllerWithIdentifier("NewsFeed")
-            self.presentViewController(tableViewController, animated: true, completion: nil)
-            
+            self.navigationController?.popViewControllerAnimated(true)
             }
         )
         
@@ -123,19 +122,23 @@ class EventDetailsTableViewController: UITableViewController {
         }
 
      
-        /**
+        
         dispatch_async(dispatch_get_main_queue()) {
             var index = 0
             for(key, value) in self.eventDetails {
                 
                 let indexPath = NSIndexPath(forRow: index, inSection: 0)
                 let cell: ProfileDetailsTableViewCell? = self.tableView.cellForRowAtIndexPath(indexPath) as! ProfileDetailsTableViewCell?
-                cell?.configure(key + ": "+value)
+                if(key != "counter" && key != "Number of people looking for") {
+                    cell?.configure(key + ": "+(value as! String))
+                } else {
+                    cell?.configure(key + ": \(value as! Int)")
+                }
                 index += 1
-                //self.tableView.reloadData()
+                self.tableView.reloadData()
             }
         }
-        **/
+        
         // Uncomment the following line to preserve selection between presentations
         // self.clearsSelectionOnViewWillAppear = false
         
