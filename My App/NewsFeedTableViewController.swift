@@ -32,8 +32,8 @@ class NewsFeedTableViewController: UITableViewController {
     
     let databaseRef = FIRDatabase.database().reference()
     let currentUser = FIRAuth.auth()?.currentUser
-    var objectArray = [[String: String]]()
-    var filteredTexts = [[String: String]]()
+    var objectArray = [[String: AnyObject]]()
+    var filteredTexts = [[String: AnyObject]]()
    
     
     func filterContentForSearchText(searchText: String, scope: String = "All") {
@@ -57,7 +57,7 @@ class NewsFeedTableViewController: UITableViewController {
         
         dispatch_async(dispatch_get_main_queue()) {
             self.databaseRef.child("events").observeEventType(.ChildAdded) { (snapshot: FIRDataSnapshot!) in
-                let dict = (snapshot.value as! [String : String])
+                let dict = (snapshot.value as! [String : AnyObject])
                 print (dict)
                 self.objectArray.append(dict)
                 self.tableView.reloadData()
@@ -96,7 +96,7 @@ class NewsFeedTableViewController: UITableViewController {
     }
 
     override func tableView(tableView: UITableView, cellForRowAtIndexPath indexPath: NSIndexPath) -> UITableViewCell {
-        var data = [String: String]()
+        var data = [String: AnyObject]()
         let dequeued:AnyObject = tableView.dequeueReusableCellWithIdentifier("Event Cell", forIndexPath: indexPath)
         let cell = dequeued as! UITableViewCell
         
@@ -106,8 +106,8 @@ class NewsFeedTableViewController: UITableViewController {
             data = objectArray[indexPath.row]
         }
         //display name of event, type, and time
-        cell.textLabel?.text = data["Activity Name"]
-        cell.detailTextLabel?.text = "Date: " + data["Date"]! + "  Time: " + data["Suggested Time"]!
+        cell.textLabel?.text = data["Activity Name"] as! String
+        cell.detailTextLabel?.text = "Date: " + data["Date"]! + "  Time: " + data["Suggested Time"]! as! String
         return cell
     }
     
@@ -129,7 +129,7 @@ class NewsFeedTableViewController: UITableViewController {
         if let eventDetailsTVC = destination as? EventDetailsTableViewController {
             if (segue.identifier == "goToEventDetails") {
                 let indexPath: NSIndexPath = self.tableView.indexPathForSelectedRow!
-                eventDetailsTVC.eventDetails = self.objectArray[indexPath.row]
+                eventDetailsTVC.eventDetails = self.objectArray[indexPath.row] 
             }
         }
     }

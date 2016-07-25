@@ -17,6 +17,7 @@ class ChatViewController: JSQMessagesViewController {
     var messages = [JSQMessage]()
     var outgoingBubbleImageView: JSQMessagesBubbleImage!
     var incomingBubbleImageView: JSQMessagesBubbleImage!
+    var eventId = ""
     
     override func collectionView(collectionView: JSQMessagesCollectionView!,
                                  messageBubbleImageDataForItemAtIndexPath indexPath: NSIndexPath!) -> JSQMessageBubbleImageDataSource! {
@@ -76,7 +77,7 @@ class ChatViewController: JSQMessagesViewController {
     override func didPressSendButton(button: UIButton!, withMessageText text: String!, senderId: String!,
                                      senderDisplayName: String!, date: NSDate!) {
         
-        let itemRef = messagesRef.childByAutoId()
+        let itemRef = messagesRef.child(eventId).childByAutoId()
         let messageItem = [
             "text": text,
             "senderId": senderId
@@ -104,7 +105,7 @@ class ChatViewController: JSQMessagesViewController {
     
     private func observeMessages() {
         
-        let messagesQuery = messagesRef.queryLimitedToLast(25)
+        let messagesQuery = messagesRef.child(eventId).queryLimitedToLast(25)
         
         messagesQuery.observeEventType(.ChildAdded) { (snapshot: FIRDataSnapshot!) in
             
