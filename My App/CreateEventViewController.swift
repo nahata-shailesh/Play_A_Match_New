@@ -31,8 +31,12 @@ class CreateEventViewController: UIViewController {
         activity.child("author").setValue(currentUser!.uid)
         activity.child("id").setValue(activity.key)
         activity.child("counter").setValue("0")
+        
         FIRDatabase.database().reference().child("user_profile").child(currentUser!.uid).child("MyEvents").child(eventId).setValue(eventId)
-        FIRDatabase.database().reference().child("user_profile").child(currentUser!.uid).child("JoinedEvents").child(eventId).setValue(eventId)        // go back to event feed
+        
+
+
+        // go back to event feed
         self.performSegueWithIdentifier("unwindToEvent", sender: self)
     }
     

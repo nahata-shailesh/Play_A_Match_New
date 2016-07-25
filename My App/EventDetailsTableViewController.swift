@@ -12,7 +12,7 @@ import FirebaseDatabase
 
 class EventDetailsTableViewController: UITableViewController {
     let currentUserId = (FIRAuth.auth()?.currentUser!.uid)!
-    var eventDetails = [String:String]()
+    var eventDetails = [String:AnyObject]()
     var newArray=[String]()
     let databaseRef = FIRDatabase.database().reference()
  //   var fields = ["location", "age", "number", "time"]
@@ -29,18 +29,32 @@ class EventDetailsTableViewController: UITableViewController {
 //    }
 
     @IBAction func didTapJoin(sender: UIButton) {
-        let eventId = self.eventDetails["id"]!
+        let eventId = self.eventDetails["id"] as! String
         databaseRef.child("user_profile").child(currentUserId).child("JoinedEvents").child(eventId).setValue(eventId)
         databaseRef.child("events").child(eventId).child("Users joined").child(currentUserId).setValue(currentUserId)
+        
+        databaseRef.child("events").child(eventId).observeEventType(FIRDataEventType.Value, withBlock: { (snapshot) in
+            let dict = snapshot.value! as! [String:String]
+                var count = NSNumberFormatter().numberFromString(dict["counter"]!)!.integerValue
+                let number = NSNumberFormatter().numberFromString(dict["Number of people looking for"]!)!.integerValue
+            if (count < number) {
+                
+                count = count + 1
+                self.databaseRef.child("events").child(eventId).child("counter").setValue("\(count)")
+            }
+            
+        })
+            
+        
         print ("Button touched")
     }
     override func viewDidLoad() {
         super.viewDidLoad()
         
         for(key, value) in self.eventDetails {
-            if(key != "author" && key != "id") {
-                print(key)
-                newArray.append(key + ": "+value);
+            if(key != "author" && key != "id" && key != "counter" && key != "Users joined") {
+                var text = value as! String
+                newArray.append(key + ": "+text);
             }
         }
      
@@ -93,7 +107,7 @@ class EventDetailsTableViewController: UITableViewController {
         var destination = segue.destinationViewController as UIViewController
         if let chatVC = destination as? ChatViewController {
             if segue.identifier == "goToChatView" {
-                //implement sending data here
+                chatVC.eventId = self.eventDetails["id"] as! String
             }
         }
     }
