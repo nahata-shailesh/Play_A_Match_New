@@ -12,7 +12,6 @@ import FirebaseAuth
 import FirebaseDatabase
 
 class NewsFeedTableViewController: UITableViewController {
-    var about = []
     
     @IBAction func unwindToEventsPage(segue: UIStoryboardSegue) {}
     @IBAction func unwindToNewsFeed(segue: UIStoryboardSegue) {}
@@ -45,16 +44,16 @@ class NewsFeedTableViewController: UITableViewController {
     
     override func viewDidLoad() {
         super.viewDidLoad()
+        
         dispatch_async(dispatch_get_main_queue()) {
             self.databaseRef.child("events").observeEventType(.ChildAdded) { (snapshot: FIRDataSnapshot!) in
-                let dict = (snapshot.value as? [String : String])!
+                let dict = (snapshot.value as! [String : String])
                 print(dict)
                 self.objectArray.append(dict)
-                
                 self.tableView.reloadData()
             }
- 
-        }
+         }
+        
         // Uncomment the following line to preserve selection between presentations
         // self.clearsSelectionOnViewWillAppear = false
 
@@ -108,7 +107,7 @@ class NewsFeedTableViewController: UITableViewController {
         if let eventDetailsTVC = destination as? EventDetailsTableViewController {
             if (segue.identifier == "goToEventDetails") {
                 let indexPath: NSIndexPath = self.tableView.indexPathForSelectedRow!
-                eventDetailsTVC.about = self.objectArray[indexPath.row]
+                eventDetailsTVC.eventDetails = self.objectArray[indexPath.row]
             }
         }
     }

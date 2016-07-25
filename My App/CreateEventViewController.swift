@@ -18,6 +18,7 @@ class CreateEventViewController: UIViewController {
     
     @IBAction func doneButtonTapped(sender: UIButton) {
         let activity = databaseRef.childByAutoId()
+        let eventId = activity.key
         //iterate through text fields
         var i = 0 //
         while i < textFields.count {
@@ -28,7 +29,10 @@ class CreateEventViewController: UIViewController {
             i = i + 1
         }
         activity.child("author").setValue(currentUser!.uid)
-        // go back to event feed
+        activity.child("id").setValue(activity.key)
+        activity.child("counter").setValue(0)
+        databaseRef.child("user_profile").child(currentUser!.uid).child("MyEvents").child(eventId).setValue(eventId)
+        databaseRef.child("user_profile").child(currentUser!.uid).child("JoinedEvents").child(eventId).setValue(eventId)        // go back to event feed
         self.performSegueWithIdentifier("unwindToEvent", sender: self)
     }
     
