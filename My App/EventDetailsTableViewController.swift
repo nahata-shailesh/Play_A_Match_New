@@ -63,15 +63,15 @@ class EventDetailsTableViewController: UITableViewController {
             alertMessage = "You have joined this event"
             databaseRef.child("user_profile").child(currentUserId).child("JoinedEvents").child(eventId).setValue(eventId)
             databaseRef.child("events").child(eventId).child("Users joined").child(currentUserId).setValue(currentUserId)
-            
+            var x = 1
             databaseRef.child("events").child(eventId).observeEventType(FIRDataEventType.Value, withBlock: { (snapshot) in
                 let dict = snapshot.value! as! [String:AnyObject]
                 var count = dict["counter"] as! Int
                 let number = dict["Number of people looking for"] as! Int
                 //var number = NSNumberFormatter().numberFromString(dict["Number of people looking for"] as! String)?.integerValue
                     //NSNumberFormatter().numberFromString(dict["Number of people looking for"] as! String)?.integerValue
-                
-                if (count < number) {
+                if (x == 1) {
+                    x = x + 1
                     count = count + 1
                     //print("Advay")
                     self.databaseRef.child("events").child(eventId).child("counter").setValue(count)
