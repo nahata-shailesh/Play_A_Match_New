@@ -49,7 +49,7 @@ class EventDetailsTableViewController: UITableViewController {
             databaseRef.child("events").child(eventId).observeEventType(FIRDataEventType.Value, withBlock: { (snapshot) in
                 let dict = snapshot.value! as! [String:AnyObject]
                 var count = dict["counter"] as! Int
-                var number = dict["Number of people looking for"] as! Int
+                let number = dict["Number of people looking for"] as! Int
                     //NSNumberFormatter().numberFromString(dict["Number of people looking for"] as! String)?.integerValue
                 
                 if (count < number) {
@@ -64,13 +64,29 @@ class EventDetailsTableViewController: UITableViewController {
         else if text == "Leave Event" {
             databaseRef.child("user_profile").child(currentUserId).child("JoinedEvents").child(eventId).removeValue()
             databaseRef.child("events").child(eventId).child("Users joined").child(currentUserId).removeValue()
+            databaseRef.child("events").child(eventId).observeEventType(FIRDataEventType.Value, withBlock: { (snapshot) in
+                let dict = snapshot.value! as! [String:AnyObject]
+                var count = dict["counter"] as! Int
+                let number = dict["Number of people looking for"] as! Int
+                //NSNumberFormatter().numberFromString(dict["Number of people looking for"] as! String)?.integerValue
+                
+                if (count > 0) {
+                    count = count - 1
+                    self.databaseRef.child("events").child(eventId).child("counter").setValue("\(count)")
+                }
+                
+                
+                
+            })
+
             alertTitle = "Action Successful"
             alertMessage = "You have left this event"
             
             
         }
         else if text == "Delete Event" {
-            var bool1 = databaseRef.child("events").child(currentUserId).child(eventId).removeValue()
+            let bool1 = databaseRef.child("events").child(eventId).removeValue()
+            print(bool1)
             alertTitle = "Action Successful"
             alertMessage = "You have deleted this event"
 
@@ -79,7 +95,7 @@ class EventDetailsTableViewController: UITableViewController {
             
         }
         
-        var alert = UIAlertController(title: alertTitle,
+        let alert = UIAlertController(title: alertTitle,
                                       message: alertMessage,
                                       preferredStyle: UIAlertControllerStyle.Alert)
         
