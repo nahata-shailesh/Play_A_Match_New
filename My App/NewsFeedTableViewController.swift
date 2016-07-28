@@ -67,14 +67,19 @@ class NewsFeedTableViewController: UITableViewController {
         }
         
         dispatch_async(dispatch_get_main_queue()) {
-            self.databaseRef.child("events").observeEventType(.ChildAdded) { (snapshot: FIRDataSnapshot!) in
-                let dict = (snapshot.value as! [String : AnyObject])
-                print (dict)
-                self.objectArray.append(dict)
+        self.databaseRef.child("events").observeEventType(.Value, withBlock: { snapshot in
+            self.objectArray = []
+                for child in snapshot.children {
+                    let snap = (child as? FIRDataSnapshot)!
+                    let dict = (snap.value as! [String : AnyObject])
+                    self.objectArray.append(dict)
+                }   
                 self.tableView.reloadData()
-            }
-        }
-        
+            }, withCancelBlock: { error in
+                print(error.description)
+            })
+         }
+		 
         self.searchController.searchResultsUpdater = self
         self.searchController.dimsBackgroundDuringPresentation = false
         self.definesPresentationContext = true
@@ -119,9 +124,9 @@ class NewsFeedTableViewController: UITableViewController {
         //display name of event, type, and time
         
         cell.textLabel?.text = data["Activity Name"] as! String
-        cell.detailTextLabel?.text = "HI" //"Date: " + (data["Date"]! as! String) + "  Time: " + (data["Suggested Time"]! as! String)
-        
-        
+        cell.detailTextLabel?.text = data["Suggested Time"] as! String //"Date: " + (data["Date"]! as! String) + "  Time: " + (data["Suggested Time"]! as! String)
+
+
         return cell
     }
     
