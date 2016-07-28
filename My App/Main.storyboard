@@ -193,6 +193,9 @@
                                     <segue destination="oPX-ZH-xxv" kind="show" identifier="goToChatView" id="SyC-wu-VHx"/>
                                 </connections>
                             </button>
+                            <connections>
+                                <action selector="didTapChatButton:" destination="N4s-se-peu" id="E2J-fm-wMW"/>
+                            </connections>
                         </barButtonItem>
                     </navigationItem>
                     <connections>

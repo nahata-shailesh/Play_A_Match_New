@@ -34,6 +34,23 @@ class EventDetailsTableViewController: UITableViewController {
 //        
 //    }
 
+    @IBAction func didTapChatButton(sender: UIBarButtonItem) {
+        if joinButton.currentTitle == "Join Event" || joinButton.currentTitle == "This event is full" {
+            let alert = UIAlertController(title: "Error",
+                                          message: "Please join this event to access chat",
+                                          preferredStyle: UIAlertControllerStyle.Alert)
+            
+            alert.addAction(UIAlertAction(title: "OK",
+                style: .Cancel)
+            { (action: UIAlertAction) -> Void in
+                // do nothing
+                }
+            )
+            
+            presentViewController(alert, animated: true, completion: nil)
+            
+        }
+    }
     
     @IBAction func didTapJoin(sender: UIButton) {
         
@@ -51,11 +68,13 @@ class EventDetailsTableViewController: UITableViewController {
                 let dict = snapshot.value! as! [String:AnyObject]
                 var count = dict["counter"] as! Int
                 let number = dict["Number of people looking for"] as! Int
+                //var number = NSNumberFormatter().numberFromString(dict["Number of people looking for"] as! String)?.integerValue
                     //NSNumberFormatter().numberFromString(dict["Number of people looking for"] as! String)?.integerValue
                 
                 if (count < number) {
                     count = count + 1
-                    self.databaseRef.child("events").child(eventId).child("counter").setValue("\(count)")
+                    //print("Advay")
+                    self.databaseRef.child("events").child(eventId).child("counter").setValue(count)
                 }
                 
                 
@@ -69,11 +88,11 @@ class EventDetailsTableViewController: UITableViewController {
                 let dict = snapshot.value! as! [String:AnyObject]
                 var count = dict["counter"] as! Int
                 let number = dict["Number of people looking for"] as! Int
-                //NSNumberFormatter().numberFromString(dict["Number of people looking for"] as! String)?.integerValue
+                //var number = NSNumberFormatter().numberFromString(dict["Number of people looking for"] as! String)?.integerValue
                 
                 if (count > 0) {
                     count = count - 1
-                    self.databaseRef.child("events").child(eventId).child("counter").setValue("\(count)")
+                    self.databaseRef.child("events").child(eventId).child("counter").setValue(count)
                 }
                 
                 
@@ -112,6 +131,7 @@ class EventDetailsTableViewController: UITableViewController {
 
     override func viewDidLoad() {
         super.viewDidLoad()
+        //chatButton.enabled = false
         for(key, value) in self.eventDetails {
             if(key != "author" && key != "id" && key != "counter" && key != "Users joined") {
                 if(key != "counter" && key != "Number of people looking for") {
@@ -128,11 +148,13 @@ class EventDetailsTableViewController: UITableViewController {
         let joinedUsers = eventDetails["Users joined"] as! [String: String]
         if(currentUserId == (eventDetails["author"] as! String)) {
             joinButton.setTitle("Delete Event", forState: UIControlState.Normal)
+            //chatButton.enabled = true
         } else if(count < num){
             if(joinedUsers[currentUserId] == nil) {
                 joinButton.setTitle("Join Event", forState: UIControlState.Normal)
             } else {
                 joinButton.setTitle("Leave Event", forState: UIControlState.Normal)
+                //chatButton.enabled = true
             }
         } else {
             joinButton.setTitle("This event is full.", forState: UIControlState.Normal)
