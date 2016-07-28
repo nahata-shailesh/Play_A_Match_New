@@ -35,9 +35,6 @@ class EventDetailsTableViewController: UITableViewController {
 //    }
 
     
-    @IBOutlet weak var joinButton: UIButton!
-    @IBOutlet weak var chatButton: UIBarButtonItem!
-    
     @IBAction func didTapJoin(sender: UIButton) {
         
         let text = joinButton.currentTitle

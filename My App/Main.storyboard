@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="UTF-8" standalone="no"?>
-<document type="com.apple.InterfaceBuilder3.CocoaTouch.Storyboard.XIB" version="3.0" toolsVersion="10117" systemVersion="15F34" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES" initialViewController="BYZ-38-t0r">
+<document type="com.apple.InterfaceBuilder3.CocoaTouch.Storyboard.XIB" version="3.0" toolsVersion="10117" systemVersion="15D21" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES" initialViewController="BYZ-38-t0r">
     <dependencies>
         <deployment identifier="iOS"/>
         <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="10085"/>
@@ -218,6 +218,7 @@
                         <rect key="frame" x="0.0" y="0.0" width="600" height="600"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                         <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
+                        <color key="tintColor" red="0.0" green="0.47843137250000001" blue="1" alpha="1" colorSpace="calibratedRGB"/>
                     </view>
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="yUq-nQ-4zo" userLabel="First Responder" sceneMemberID="firstResponder"/>
@@ -479,16 +480,56 @@
                     <connections>
                         <segue destination="oBb-4w-e3S" kind="relationship" relationship="viewControllers" id="OZn-m1-YNP"/>
                         <segue destination="8aT-Eo-zci" kind="relationship" relationship="viewControllers" id="Ae4-Qj-mmQ"/>
+                        <segue destination="9qB-nZ-8J2" kind="relationship" relationship="viewControllers" id="Zbl-HQ-2Xs"/>
+                        <segue destination="0Yf-hD-rN4" kind="relationship" relationship="viewControllers" id="PB7-UA-wM1"/>
                     </connections>
                 </tabBarController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="06A-SN-AWv" userLabel="First Responder" sceneMemberID="firstResponder"/>
             </objects>
             <point key="canvasLocation" x="116" y="260"/>
         </scene>
+        <!--My Events-->
+        <scene sceneID="d5J-Z7-Akh">
+            <objects>
+                <navigationController id="9qB-nZ-8J2" sceneMemberID="viewController">
+                    <tabBarItem key="tabBarItem" title="My Events" image="write" id="IIK-E4-iUX"/>
+                    <navigationBar key="navigationBar" contentMode="scaleToFill" barStyle="black" id="db1-mi-8Cd">
+                        <rect key="frame" x="0.0" y="0.0" width="320" height="44"/>
+                        <autoresizingMask key="autoresizingMask"/>
+                        <color key="tintColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
+                        <color key="barTintColor" red="0.0" green="0.47843137250000001" blue="1" alpha="1" colorSpace="calibratedRGB"/>
+                    </navigationBar>
+                    <connections>
+                        <segue destination="be7-FN-1y9" kind="relationship" relationship="rootViewController" id="nYN-nL-7jm"/>
+                    </connections>
+                </navigationController>
+                <placeholder placeholderIdentifier="IBFirstResponder" id="5IJ-uR-oZP" userLabel="First Responder" sceneMemberID="firstResponder"/>
+            </objects>
+            <point key="canvasLocation" x="116" y="-411"/>
+        </scene>
+        <!--Joined Events-->
+        <scene sceneID="qhj-Cn-EcB">
+            <objects>
+                <navigationController id="0Yf-hD-rN4" sceneMemberID="viewController">
+                    <tabBarItem key="tabBarItem" title="Joined Events" image="remote-control-hand" id="rs8-mB-U3T"/>
+                    <navigationBar key="navigationBar" contentMode="scaleToFill" barStyle="black" id="Pbr-IV-f8n">
+                        <rect key="frame" x="0.0" y="0.0" width="320" height="44"/>
+                        <autoresizingMask key="autoresizingMask"/>
+                        <color key="tintColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
+                        <color key="barTintColor" red="0.0" green="0.47843137250000001" blue="1" alpha="1" colorSpace="calibratedRGB"/>
+                    </navigationBar>
+                    <connections>
+                        <segue destination="be7-FN-1y9" kind="relationship" relationship="rootViewController" id="88q-ck-TcD"/>
+                    </connections>
+                </navigationController>
+                <placeholder placeholderIdentifier="IBFirstResponder" id="wJG-4o-97x" userLabel="First Responder" sceneMemberID="firstResponder"/>
+            </objects>
+            <point key="canvasLocation" x="792" y="-401"/>
+        </scene>
         <!--Home-->
         <scene sceneID="D0f-YN-7Bp">
             <objects>
-                <navigationController automaticallyAdjustsScrollViewInsets="NO" id="oBb-4w-e3S" sceneMemberID="viewController">
+                <navigationController id="oBb-4w-e3S" sceneMemberID="viewController">
                     <tabBarItem key="tabBarItem" title="Home" image="home" id="6H0-L2-9ho"/>
                     <toolbarItems/>
                     <navigationBar key="navigationBar" contentMode="scaleToFill" barStyle="black" id="YGO-g8-TWI">
@@ -536,7 +577,12 @@
         <image name="SportItmes" width="1300" height="650"/>
         <image name="bubble-chat" width="24" height="24"/>
         <image name="home" width="24" height="24"/>
+        <image name="remote-control-hand" width="24" height="24"/>
         <image name="sport_background" width="1024" height="768"/>
         <image name="user" width="24" height="24"/>
+        <image name="write" width="24" height="24"/>
     </resources>
+    <inferredMetricsTieBreakers>
+        <segue reference="88q-ck-TcD"/>
+    </inferredMetricsTieBreakers>
 </document>
