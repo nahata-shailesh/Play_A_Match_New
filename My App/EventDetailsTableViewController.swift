@@ -35,7 +35,10 @@ class EventDetailsTableViewController: UITableViewController {
 //    }
 
     @IBAction func didTapChatButton(sender: UIBarButtonItem) {
+        print("ALallalala")
+        print(joinButton.currentTitle)
         if joinButton.currentTitle == "Join Event" || joinButton.currentTitle == "This event is full" {
+            print("Lala")
             let alert = UIAlertController(title: "Error",
                                           message: "Please join this event to access chat",
                                           preferredStyle: UIAlertControllerStyle.Alert)
@@ -53,7 +56,7 @@ class EventDetailsTableViewController: UITableViewController {
     }
     
     @IBAction func didTapJoin(sender: UIButton) {
-        
+        print("ALallalala")
         let text = joinButton.currentTitle
         var alertTitle = ""
         var alertMessage = ""
@@ -112,7 +115,8 @@ class EventDetailsTableViewController: UITableViewController {
 
         }
         else if text == "This event is full" {
-            
+            alertTitle = "Sorry"
+            alertMessage = "This event is full"
         }
         
         let alert = UIAlertController(title: alertTitle,
@@ -157,7 +161,7 @@ class EventDetailsTableViewController: UITableViewController {
                 //chatButton.enabled = true
             }
         } else {
-            joinButton.setTitle("This event is full.", forState: UIControlState.Normal)
+            joinButton.setTitle("This event is full", forState: UIControlState.Normal)
         }
 
      

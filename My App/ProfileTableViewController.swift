@@ -13,13 +13,13 @@ import FirebaseAuth
 class ProfileTableViewController: UITableViewController {
     
     var about = ["Name", "Gender", "Age", "Phone", "Email"]
-    
     var ref = FIRDatabase.database().reference()
+    
     var user = FIRAuth.auth()?.currentUser
     
     override func viewDidLoad() {
         super.viewDidLoad()
-
+        self.hideKeyboardWhenTappedAround()
         self.tableView.contentInset = UIEdgeInsetsMake(20, 0, 0, 0)
         
         self.ref.child("user_profile").observeEventType(FIRDataEventType.Value, withBlock: { (snapshot) in
@@ -42,6 +42,15 @@ class ProfileTableViewController: UITableViewController {
         })
     }
     
+//    func textFieldShouldReturn(myTextField: UITextField) -> Bool {
+//        myTextField.resignFirstResponder()
+//        return true
+//    }
+//    
+//    override func touchesBegan(touches: Set<UITouch>, withEvent event: UIEvent?) {
+//        self.view.endEditing(true)
+//    }
+    
     @IBAction func didTapUpdate(sender: UIButton) {
         
         var index = 0
@@ -59,7 +68,22 @@ class ProfileTableViewController: UITableViewController {
             index += 1
         }
         
+        let alert = UIAlertController(title: "Congratulations",
+                                      message: "Your details have been updated",
+                                      preferredStyle: UIAlertControllerStyle.Alert)
+        
+        alert.addAction(UIAlertAction(title: "OK",
+            style: .Cancel)
+        { (action: UIAlertAction) -> Void in
+            // do nothing
+            }
+        )
+        
+        presentViewController(alert, animated: true, completion: nil)
+
     }
+    
+    
 
     override func didReceiveMemoryWarning() {
         super.didReceiveMemoryWarning()
@@ -133,4 +157,15 @@ class ProfileTableViewController: UITableViewController {
     }
     */
 
+}
+
+extension UIViewController {
+    func hideKeyboardWhenTappedAround() {
+        let tap: UITapGestureRecognizer = UITapGestureRecognizer(target: self, action: #selector(UIViewController.dismissKeyboard))
+        view.addGestureRecognizer(tap)
+    }
+    
+    func dismissKeyboard() {
+        view.endEditing(true)
+    }
 }
