@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="UTF-8" standalone="no"?>
-<document type="com.apple.InterfaceBuilder3.CocoaTouch.Storyboard.XIB" version="3.0" toolsVersion="10117" systemVersion="15F34" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES" initialViewController="BYZ-38-t0r">
+<document type="com.apple.InterfaceBuilder3.CocoaTouch.Storyboard.XIB" version="3.0" toolsVersion="10117" systemVersion="15D21" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES" initialViewController="BYZ-38-t0r">
     <dependencies>
         <deployment identifier="iOS"/>
         <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="10085"/>
@@ -214,6 +214,7 @@
                         </rightBarButtonItems>
                     </navigationItem>
                     <connections>
+                        <outlet property="chatButton" destination="7rK-ho-Yhu" id="efz-Z3-vQF"/>
                         <outlet property="joinButton" destination="3el-Kx-KNo" id="f7K-vm-r5U"/>
                         <outlet property="manageEventButton" destination="d08-GM-4jJ" id="6e2-o5-dR4"/>
                         <segue destination="h5Q-h4-ff2" kind="unwind" identifier="unwindToNews" unwindAction="unwindToNewsFeed:" id="kZI-a2-A7C"/>
@@ -517,6 +518,9 @@
                                         </label>
                                     </subviews>
                                 </tableViewCellContentView>
+                                <connections>
+                                    <segue destination="X96-4f-owt" kind="show" identifier="goToUserDetails" id="zou-P5-5Sy"/>
+                                </connections>
                             </tableViewCell>
                         </prototypes>
                         <connections>
@@ -528,6 +532,59 @@
                 <placeholder placeholderIdentifier="IBFirstResponder" id="RPq-l0-2Vh" userLabel="First Responder" sceneMemberID="firstResponder"/>
             </objects>
             <point key="canvasLocation" x="2141" y="977"/>
+        </scene>
+        <!--User Details-->
+        <scene sceneID="3It-xF-KtM">
+            <objects>
+                <tableViewController title="User Details" id="X96-4f-owt" customClass="UserDetailsTableViewController" customModule="My_App" customModuleProvider="target" sceneMemberID="viewController">
+                    <tableView key="view" clipsSubviews="YES" contentMode="scaleToFill" alwaysBounceVertical="YES" dataMode="prototypes" style="plain" separatorStyle="default" rowHeight="44" sectionHeaderHeight="28" sectionFooterHeight="28" id="ZRK-Ms-Afl">
+                        <rect key="frame" x="0.0" y="0.0" width="600" height="600"/>
+                        <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
+                        <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
+                        <button key="tableFooterView" opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" id="p31-Vn-ibH">
+                            <rect key="frame" x="0.0" y="136" width="600" height="44"/>
+                            <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
+                            <state key="normal" title="Remove user from event"/>
+                            <connections>
+                                <action selector="didPressRemoveUserButton:" destination="X96-4f-owt" eventType="touchUpInside" id="1JP-Ox-F59"/>
+                            </connections>
+                        </button>
+                        <prototypes>
+                            <tableViewCell clipsSubviews="YES" contentMode="scaleToFill" selectionStyle="default" indentationWidth="10" reuseIdentifier="User Field" id="bwb-iH-gX8" customClass="UserDetailTableViewCell" customModule="My_App" customModuleProvider="target">
+                                <rect key="frame" x="0.0" y="92" width="600" height="44"/>
+                                <autoresizingMask key="autoresizingMask"/>
+                                <tableViewCellContentView key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" tableViewCell="bwb-iH-gX8" id="EqB-U7-tKm">
+                                    <rect key="frame" x="0.0" y="0.0" width="600" height="43"/>
+                                    <autoresizingMask key="autoresizingMask"/>
+                                    <subviews>
+                                        <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Label" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="cTO-ol-NRO">
+                                            <rect key="frame" x="8" y="8" width="584" height="27"/>
+                                            <fontDescription key="fontDescription" type="system" pointSize="17"/>
+                                            <color key="textColor" cocoaTouchSystemColor="darkTextColor"/>
+                                            <nil key="highlightedColor"/>
+                                        </label>
+                                    </subviews>
+                                    <constraints>
+                                        <constraint firstItem="cTO-ol-NRO" firstAttribute="leading" secondItem="EqB-U7-tKm" secondAttribute="leadingMargin" id="BBv-9A-lnd"/>
+                                        <constraint firstItem="cTO-ol-NRO" firstAttribute="bottom" secondItem="EqB-U7-tKm" secondAttribute="bottomMargin" id="hP2-vq-OGD"/>
+                                        <constraint firstItem="cTO-ol-NRO" firstAttribute="trailing" secondItem="EqB-U7-tKm" secondAttribute="trailingMargin" id="q5Q-e4-cTL"/>
+                                        <constraint firstItem="cTO-ol-NRO" firstAttribute="top" secondItem="EqB-U7-tKm" secondAttribute="topMargin" id="uTC-on-nOG"/>
+                                    </constraints>
+                                </tableViewCellContentView>
+                                <connections>
+                                    <outlet property="myTextLabel" destination="cTO-ol-NRO" id="dDr-gL-eb3"/>
+                                </connections>
+                            </tableViewCell>
+                        </prototypes>
+                        <connections>
+                            <outlet property="dataSource" destination="X96-4f-owt" id="fhr-PA-64e"/>
+                            <outlet property="delegate" destination="X96-4f-owt" id="0s5-FJ-HMb"/>
+                        </connections>
+                    </tableView>
+                </tableViewController>
+                <placeholder placeholderIdentifier="IBFirstResponder" id="lyv-On-IMQ" userLabel="First Responder" sceneMemberID="firstResponder"/>
+            </objects>
+            <point key="canvasLocation" x="2846" y="977"/>
         </scene>
         <!--Tab Bar Controller-->
         <scene sceneID="oBt-JN-wnY">
