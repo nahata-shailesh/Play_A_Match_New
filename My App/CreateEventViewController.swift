@@ -68,6 +68,7 @@ class CreateEventViewController: UIViewController {
                 FIRDatabase.database().reference().child("events").child(eventId).child("Users joined").child(currentUser!.uid).setValue(currentUser!.uid)
         }
         // go back to event feed
+        self.view!.endEditing(true)
         self.performSegueWithIdentifier("unwindToEvent", sender: self)
     }
     
