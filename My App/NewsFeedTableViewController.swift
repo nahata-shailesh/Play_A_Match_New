@@ -124,7 +124,7 @@ class NewsFeedTableViewController: UITableViewController {
         //display name of event, type, and time
         
         cell.textLabel?.text = data["Activity Name"] as! String
-        cell.detailTextLabel?.text = data["Suggested Time"] as! String //"Date: " + (data["Date"]! as! String) + "  Time: " + (data["Suggested Time"]! as! String)
+        cell.detailTextLabel?.text = "Date: " + (data["Date"] as! String) + "  Time: " + (data["Suggested Time"]! as! String)
 
 
         return cell
