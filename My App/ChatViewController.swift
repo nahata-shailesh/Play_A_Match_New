@@ -18,9 +18,10 @@ class ChatViewController: JSQMessagesViewController {
     var outgoingBubbleImageView: JSQMessagesBubbleImage!
     var incomingBubbleImageView: JSQMessagesBubbleImage!
     var eventId = ""
-    
+    //creates bubble
     override func collectionView(collectionView: JSQMessagesCollectionView!,
                                  messageBubbleImageDataForItemAtIndexPath indexPath: NSIndexPath!) -> JSQMessageBubbleImageDataSource! {
+        print(currentUser)
         let message = messages[indexPath.item]
         if message.senderId == senderId {
             return outgoingBubbleImageView
@@ -28,11 +29,29 @@ class ChatViewController: JSQMessagesViewController {
             return incomingBubbleImageView
         }
     }
-    
+    //avatar
     override func collectionView(collectionView: JSQMessagesCollectionView!,
                                  avatarImageDataForItemAtIndexPath indexPath: NSIndexPath!) -> JSQMessageAvatarImageDataSource! {
+        let message = messages[indexPath.item]
+        
         return nil
     }
+    //messagebubbletoplabel
+    override func collectionView(collectionView: JSQMessagesCollectionView?, attributedTextForMessageBubbleTopLabelAtIndexPath indexPath: NSIndexPath!) -> NSAttributedString! {
+        let message = messages[indexPath.item]
+        switch message.senderId {
+        case currentUser!.uid:
+            return nil
+        default:
+            guard let senderDisplayName = message.senderDisplayName else {
+                assertionFailure()
+                return nil
+            }
+            return NSAttributedString(string: senderDisplayName)
+            
+        }
+    }
+    
     
     private func setupBubbles() {
         let factory = JSQMessagesBubbleImageFactory()
@@ -53,8 +72,17 @@ class ChatViewController: JSQMessagesViewController {
         return messages.count
     }
     
-    func addMessage(id: String, text: String) {
-        let message = JSQMessage(senderId: id, displayName: "", text: text)
+    override func collectionView(collectionView: JSQMessagesCollectionView, layout collectionViewLayout: JSQMessagesCollectionViewFlowLayout, heightForCellTopLabelAtIndexPath indexPath: NSIndexPath) -> CGFloat {
+        return 10
+    }
+    override func collectionView(collectionView: JSQMessagesCollectionView, layout collectionViewLayout: JSQMessagesCollectionViewFlowLayout, heightForCellBottomLabelAtIndexPath indexPath: NSIndexPath) -> CGFloat {
+        return 10
+    }
+    
+    
+    
+    func addMessage(id: String, text: String, name: String) {
+        let message = JSQMessage(senderId: id, displayName: name, text: text)
         messages.append(message)
     }
     
@@ -80,7 +108,8 @@ class ChatViewController: JSQMessagesViewController {
         let itemRef = messagesRef.child(eventId).childByAutoId()
         let messageItem = [
             "text": text,
-            "senderId": senderId
+            "senderId": senderId,
+            "name": senderDisplayName
         ]
         itemRef.setValue(messageItem)
         
@@ -98,10 +127,11 @@ class ChatViewController: JSQMessagesViewController {
         
         self.senderId = currentUser?.uid
         self.senderDisplayName = currentUser?.displayName
+        //TODO CHANGE TITLE
         title = "EventName"
         setupBubbles()
-        collectionView!.collectionViewLayout.incomingAvatarViewSize = CGSizeZero
-        collectionView!.collectionViewLayout.outgoingAvatarViewSize = CGSizeZero
+        collectionView!.collectionViewLayout.incomingAvatarViewSize = CGSizeMake(5, 5)
+        collectionView!.collectionViewLayout.outgoingAvatarViewSize = CGSizeMake(5, 5)
         // Do any additional setup after loading the view.
     }
     
@@ -114,9 +144,9 @@ class ChatViewController: JSQMessagesViewController {
             
             let id = snapshot.value?["senderId"] as! String
             let text = snapshot.value?["text"] as! String
+            let displayName = snapshot.value?["name"] as! String
             
-            
-            self.addMessage(id, text: text)
+            self.addMessage(id, text: text, name: displayName)
             
             
             self.finishReceivingMessage()

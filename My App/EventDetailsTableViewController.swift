@@ -63,26 +63,24 @@ class EventDetailsTableViewController: UITableViewController {
         var alertTitle = ""
         var alertMessage = ""
         let eventId = self.eventDetails["id"] as! String
+        let eventName = self.eventDetails["Activity Name"] as! String
+        
         if text == "Join Event" {
             alertTitle = "Congratulations!"
             alertMessage = "You have joined this event"
-            databaseRef.child("user_profile").child(currentUserId).child("JoinedEvents").child(eventId).setValue(eventId)
-            databaseRef.child("events").child(eventId).child("Users joined").child(currentUserId).setValue(currentUserId)
-            var x = 1
+            databaseRef.child("user_profile").child(currentUserId).child("JoinedEvents").child(eventId).setValue(eventName)
+            databaseRef.child("events").child(eventId).child("Users joined").child(currentUserId).setValue(FIRAuth.auth()?.currentUser?.displayName)
             databaseRef.child("events").child(eventId).observeEventType(FIRDataEventType.Value, withBlock: { (snapshot) in
+                print(snapshot)
                 let dict = snapshot.value! as! [String:AnyObject]
                 var count = dict["counter"] as! Int
                 let number = dict["Number of people looking for"] as! Int
                 //var number = NSNumberFormatter().numberFromString(dict["Number of people looking for"] as! String)?.integerValue
                     //NSNumberFormatter().numberFromString(dict["Number of people looking for"] as! String)?.integerValue
-                if (x == 1) {
-                    x = x + 1
+                if (count < number) {
                     count = count + 1
-                    //print("Advay")
                     self.databaseRef.child("events").child(eventId).child("counter").setValue(count)
                 }
-                
-                
                 
             })
         }
@@ -92,9 +90,7 @@ class EventDetailsTableViewController: UITableViewController {
             databaseRef.child("events").child(eventId).observeEventType(FIRDataEventType.Value, withBlock: { (snapshot) in
                 let dict = snapshot.value! as! [String:AnyObject]
                 var count = dict["counter"] as! Int
-                let number = dict["Number of people looking for"] as! Int
                 //var number = NSNumberFormatter().numberFromString(dict["Number of people looking for"] as! String)?.integerValue
-                
                 if (count > 0) {
                     count = count - 1
                     self.databaseRef.child("events").child(eventId).child("counter").setValue(count)
@@ -110,8 +106,7 @@ class EventDetailsTableViewController: UITableViewController {
             
         }
         else if text == "Delete Event" {
-            let bool1 = databaseRef.child("events").child(eventId).removeValue()
-            print(bool1)
+            databaseRef.child("events").child(eventId).removeValue()
             alertTitle = "Action Successful"
             alertMessage = "You have deleted this event"
 
