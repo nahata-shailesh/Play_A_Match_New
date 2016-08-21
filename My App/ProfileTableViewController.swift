@@ -23,23 +23,44 @@ class ProfileTableViewController: UITableViewController {
         self.tableView.contentInset = UIEdgeInsetsMake(20, 0, 0, 0)
         
         self.ref.child("user_profile").observeEventType(FIRDataEventType.Value, withBlock: { (snapshot) in
+        
+        let usersDict = snapshot.value as! NSDictionary
+        let userDetails = usersDict.objectForKey(self.user!.uid)
             
-            let usersDict = snapshot.value as! NSDictionary
-            let userDetails = usersDict.objectForKey(self.user!.uid)
-            
-            var index = 0
-            
-            while index < self.about.count {
-                
-                let indexPath = NSIndexPath(forRow: index, inSection: 0)
-                let cell: TextInputTableViewCell? = self.tableView.cellForRowAtIndexPath(indexPath) as! TextInputTableViewCell?
-                let field: String? = (cell?.TextField.placeholder)!
-                cell?.configure(userDetails?.objectForKey(field!) as? String, placeholder: field!)
 
-                index += 1
+//        if let user = FIRAuth.auth()?.currentUser {
+//            // User is signed in.
+//            let name = user.displayName
+//            let email = user.email
+////            let photoUrl = user.photoURL
+////            let uid = user.uid;
+//            
+//            userDetails!["Name"] = name
+//            userDetails!["Email"] = email
+//            
+//        } else {
+//            // No user is signed in.
+//        }
+        
+        var index = 0
+        while index < self.about.count {
+            
+            let indexPath = NSIndexPath(forRow: index, inSection: 0)
+            let cell: TextInputTableViewCell? = self.tableView.cellForRowAtIndexPath(indexPath) as! TextInputTableViewCell?
+            let field: String? = (cell?.TextField.placeholder)!
+            if field == "Name" && userDetails!["Name"] as? String == ""  {
+                cell?.configure(self.user?.displayName, placeholder: field!)
+            }
+            else if field == "Email" && userDetails!["Email"] as? String == ""{
+                cell?.configure(self.user?.email, placeholder: field!)
+            } else {
+                cell?.configure(userDetails?.objectForKey(field!) as? String, placeholder: field!)
             }
             
-        })
+            index += 1
+        }
+        
+    })
     }
     
 //    func textFieldShouldReturn(myTextField: UITextField) -> Bool {

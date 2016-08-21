@@ -6,6 +6,7 @@
         <capability name="Alignment constraints to the first baseline" minToolsVersion="6.0"/>
         <capability name="Alignment constraints with different attributes" minToolsVersion="5.1"/>
         <capability name="Constraints to layout margins" minToolsVersion="6.0"/>
+        <capability name="Navigation items with more than one left or right bar item" minToolsVersion="7.0"/>
     </dependencies>
     <scenes>
         <!--View Controller-->
@@ -182,25 +183,40 @@
                         </connections>
                     </tableView>
                     <navigationItem key="navigationItem" title="Event Details" id="Zdu-8K-kvn" colorLabel="IBBuiltInLabel-Blue">
-                        <barButtonItem key="rightBarButtonItem" title="Item" id="7rK-ho-Yhu">
-                            <button key="customView" opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" id="3iw-1d-mPy">
-                                <rect key="frame" x="556" y="10" width="24" height="24"/>
-                                <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
-                                <rect key="contentStretch" x="0.0" y="0.0" width="0.5" height="1"/>
-                                <fontDescription key="fontDescription" type="system" pointSize="12"/>
-                                <state key="normal" image="bubble-chat"/>
+                        <rightBarButtonItems>
+                            <barButtonItem title="Item" id="7rK-ho-Yhu">
+                                <button key="customView" opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" id="3iw-1d-mPy">
+                                    <rect key="frame" x="556" y="10" width="24" height="24"/>
+                                    <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
+                                    <rect key="contentStretch" x="0.0" y="0.0" width="0.5" height="1"/>
+                                    <fontDescription key="fontDescription" type="system" pointSize="12"/>
+                                    <state key="normal" image="bubble-chat"/>
+                                    <connections>
+                                        <segue destination="oPX-ZH-xxv" kind="show" identifier="goToChatView" id="SyC-wu-VHx"/>
+                                    </connections>
+                                </button>
                                 <connections>
-                                    <segue destination="oPX-ZH-xxv" kind="show" identifier="goToChatView" id="SyC-wu-VHx"/>
+                                    <action selector="didTapChatButton:" destination="N4s-se-peu" id="dOS-2v-bsi"/>
                                 </connections>
-                            </button>
-                            <connections>
-                                <action selector="didTapChatButton:" destination="N4s-se-peu" id="E2J-fm-wMW"/>
-                            </connections>
-                        </barButtonItem>
+                            </barButtonItem>
+                            <barButtonItem id="AMW-jK-Yko">
+                                <button key="customView" opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" id="d08-GM-4jJ">
+                                    <rect key="frame" x="415" y="7" width="133" height="30"/>
+                                    <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
+                                    <state key="normal" title="Manage Event">
+                                        <color key="titleColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
+                                    </state>
+                                    <connections>
+                                        <segue destination="y0n-eN-YTg" kind="show" identifier="goToManageEvent" id="sDt-JP-Vd5"/>
+                                    </connections>
+                                </button>
+                            </barButtonItem>
+                        </rightBarButtonItems>
                     </navigationItem>
                     <connections>
                         <outlet property="chatButton" destination="7rK-ho-Yhu" id="B7z-Qr-DLy"/>
                         <outlet property="joinButton" destination="3el-Kx-KNo" id="f7K-vm-r5U"/>
+                        <outlet property="manageEventButton" destination="d08-GM-4jJ" id="6e2-o5-dR4"/>
                         <segue destination="h5Q-h4-ff2" kind="unwind" identifier="unwindToNews" unwindAction="unwindToNewsFeed:" id="kZI-a2-A7C"/>
                     </connections>
                 </tableViewController>
@@ -469,6 +485,50 @@
                 <exit id="IXX-6g-M9y" userLabel="Exit" sceneMemberID="exit"/>
             </objects>
             <point key="canvasLocation" x="1488" y="977"/>
+        </scene>
+        <!--Manage Event Table View Controller-->
+        <scene sceneID="PNt-Mt-Ove">
+            <objects>
+                <tableViewController id="y0n-eN-YTg" customClass="ManageEventTableViewController" customModule="My_App" customModuleProvider="target" sceneMemberID="viewController">
+                    <tableView key="view" clipsSubviews="YES" contentMode="scaleToFill" alwaysBounceVertical="YES" dataMode="prototypes" style="plain" separatorStyle="default" rowHeight="44" sectionHeaderHeight="28" sectionFooterHeight="28" id="iCN-MQ-h7n">
+                        <rect key="frame" x="0.0" y="0.0" width="600" height="600"/>
+                        <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
+                        <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
+                        <prototypes>
+                            <tableViewCell clipsSubviews="YES" contentMode="scaleToFill" selectionStyle="default" accessoryType="disclosureIndicator" indentationWidth="10" reuseIdentifier="User Cell" textLabel="za7-cv-ATN" detailTextLabel="aRB-31-xIV" style="IBUITableViewCellStyleSubtitle" id="mDL-ij-Tou">
+                                <rect key="frame" x="0.0" y="92" width="600" height="44"/>
+                                <autoresizingMask key="autoresizingMask"/>
+                                <tableViewCellContentView key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" tableViewCell="mDL-ij-Tou" id="ygd-1W-5te">
+                                    <rect key="frame" x="0.0" y="0.0" width="567" height="43"/>
+                                    <autoresizingMask key="autoresizingMask"/>
+                                    <subviews>
+                                        <label opaque="NO" multipleTouchEnabled="YES" contentMode="left" text="Title" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" id="za7-cv-ATN">
+                                            <rect key="frame" x="15" y="5" width="32" height="20"/>
+                                            <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
+                                            <fontDescription key="fontDescription" type="system" pointSize="16"/>
+                                            <color key="textColor" cocoaTouchSystemColor="darkTextColor"/>
+                                            <nil key="highlightedColor"/>
+                                        </label>
+                                        <label opaque="NO" multipleTouchEnabled="YES" contentMode="left" text="Subtitle" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" id="aRB-31-xIV">
+                                            <rect key="frame" x="15" y="25" width="41" height="14"/>
+                                            <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
+                                            <fontDescription key="fontDescription" type="system" pointSize="11"/>
+                                            <color key="textColor" cocoaTouchSystemColor="darkTextColor"/>
+                                            <nil key="highlightedColor"/>
+                                        </label>
+                                    </subviews>
+                                </tableViewCellContentView>
+                            </tableViewCell>
+                        </prototypes>
+                        <connections>
+                            <outlet property="dataSource" destination="y0n-eN-YTg" id="fL1-yn-a4p"/>
+                            <outlet property="delegate" destination="y0n-eN-YTg" id="CPM-uY-WwX"/>
+                        </connections>
+                    </tableView>
+                </tableViewController>
+                <placeholder placeholderIdentifier="IBFirstResponder" id="RPq-l0-2Vh" userLabel="First Responder" sceneMemberID="firstResponder"/>
+            </objects>
+            <point key="canvasLocation" x="2141" y="977"/>
         </scene>
         <!--Tab Bar Controller-->
         <scene sceneID="oBt-JN-wnY">

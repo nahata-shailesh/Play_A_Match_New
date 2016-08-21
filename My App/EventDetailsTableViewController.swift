@@ -20,6 +20,7 @@ class EventDetailsTableViewController: UITableViewController {
     
     @IBOutlet weak var chatButton: UIBarButtonItem!
     
+    @IBOutlet weak var manageEventButton: UIButton!
     
  //   var fields = ["location", "age", "number", "time"]
     
@@ -28,13 +29,14 @@ class EventDetailsTableViewController: UITableViewController {
 //        while ind < about[1].count {
 //            newArray.append(about[1][ind])
 //        }
-//        
+//
 //        newArray.insert(about[0])
 //        print(newArray)
 //        
 //    }
 
     @IBAction func didTapChatButton(sender: UIBarButtonItem) {
+        
         print("ALallalala")
         print(joinButton.currentTitle)
         if joinButton.currentTitle == "Join Event" || joinButton.currentTitle == "This event is full" {
@@ -135,7 +137,8 @@ class EventDetailsTableViewController: UITableViewController {
 
     override func viewDidLoad() {
         super.viewDidLoad()
-        //chatButton.enabled = false
+        chatButton.enabled = false
+        manageEventButton.hidden = true
         for(key, value) in self.eventDetails {
             if(key != "author" && key != "id" && key != "counter" && key != "Users joined") {
                 if(key != "counter" && key != "Number of people looking for") {
@@ -152,13 +155,14 @@ class EventDetailsTableViewController: UITableViewController {
         let joinedUsers = eventDetails["Users joined"] as! [String: String]
         if(currentUserId == (eventDetails["author"] as! String)) {
             joinButton.setTitle("Delete Event", forState: UIControlState.Normal)
-            //chatButton.enabled = true
+            chatButton.enabled = true
+            manageEventButton.hidden = false
         } else if(count < num){
             if(joinedUsers[currentUserId] == nil) {
                 joinButton.setTitle("Join Event", forState: UIControlState.Normal)
             } else {
                 joinButton.setTitle("Leave Event", forState: UIControlState.Normal)
-                //chatButton.enabled = true
+                chatButton.enabled = true
             }
         } else {
             joinButton.setTitle("This event is full", forState: UIControlState.Normal)
@@ -220,6 +224,11 @@ class EventDetailsTableViewController: UITableViewController {
             if segue.identifier == "goToChatView" {
                 chatVC.eventId = self.eventDetails["id"] as! String
             }
+        } else if let manageTVC = destination as? ManageEventTableViewController {
+            if segue.identifier == "goToManageEvent" {
+                manageTVC.eventID = self.eventDetails["id"] as! String
+            }
+        
         }
     }
 

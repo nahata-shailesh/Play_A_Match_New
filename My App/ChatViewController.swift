@@ -93,6 +93,9 @@ class ChatViewController: JSQMessagesViewController {
     
     override func viewDidLoad() {
         super.viewDidLoad()
+        let appDelegate = UIApplication.sharedApplication().delegate as! AppDelegate
+        appDelegate.shouldRotate = true
+        
         self.senderId = currentUser?.uid
         self.senderDisplayName = currentUser?.displayName
         title = "EventName"

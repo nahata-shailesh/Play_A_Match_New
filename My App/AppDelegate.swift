@@ -14,7 +14,7 @@ import FBSDKLoginKit
 class AppDelegate: UIResponder, UIApplicationDelegate {
 
     var window: UIWindow?
-
+    internal var shouldRotate = false
 
     func application(application: UIApplication, didFinishLaunchingWithOptions launchOptions: [NSObject: AnyObject]?) -> Bool {
         // Override point for customization after application launch.
@@ -27,6 +27,15 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
         var handled: Bool = FBSDKApplicationDelegate.sharedInstance().application(application, openURL: url, sourceApplication: sourceApplication, annotation: annotation)
         // Add any custom logic here.
         return handled
+    }
+    
+    func application(application: UIApplication, supportedInterfaceOrientationsForWindow window: UIWindow?) -> UIInterfaceOrientationMask {
+        if shouldRotate {
+            return .AllButUpsideDown
+        }
+        else {
+            return .Portrait
+        }
     }
 
     func applicationWillResignActive(application: UIApplication) {
