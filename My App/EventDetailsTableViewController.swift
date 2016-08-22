@@ -22,19 +22,6 @@ class EventDetailsTableViewController: UITableViewController {
     
     @IBOutlet weak var manageEventButton: UIButton!
     
- //   var fields = ["location", "age", "number", "time"]
-    
-//    func convert(about: NSArray) {
-//        var ind = 0
-//        while ind < about[1].count {
-//            newArray.append(about[1][ind])
-//        }
-//
-//        newArray.insert(about[0])
-//        print(newArray)
-//        
-//    }
-
     @IBAction func didTapChatButton(sender: UIBarButtonItem) {
         
         print("ALallalala")
@@ -70,35 +57,24 @@ class EventDetailsTableViewController: UITableViewController {
             alertMessage = "You have joined this event"
             databaseRef.child("user_profile").child(currentUserId).child("JoinedEvents").child(eventId).setValue(eventName)
             databaseRef.child("events").child(eventId).child("Users joined").child(currentUserId).setValue(FIRAuth.auth()?.currentUser?.displayName)
-            databaseRef.child("events").child(eventId).observeEventType(FIRDataEventType.Value, withBlock: { (snapshot) in
-                print(snapshot)
-                let dict = snapshot.value! as! [String:AnyObject]
-                var count = dict["counter"] as! Int
-                let number = dict["Number of people looking for"] as! Int
-                //var number = NSNumberFormatter().numberFromString(dict["Number of people looking for"] as! String)?.integerValue
-                    //NSNumberFormatter().numberFromString(dict["Number of people looking for"] as! String)?.integerValue
-                if (count < number) {
-                    count = count + 1
-                    self.databaseRef.child("events").child(eventId).child("counter").setValue(count)
-                }
+            var count = self.eventDetails["counter"] as! Int
+            let number = self.eventDetails["Number of people looking for"] as! Int
+            if (count < number - 1) {
+                count = count + 1
                 
-            })
+            }
+            databaseRef.child("events").child(eventId).child("counter").setValue(count)
+            
         }
         else if text == "Leave Event" {
             databaseRef.child("user_profile").child(currentUserId).child("JoinedEvents").child(eventId).removeValue()
             databaseRef.child("events").child(eventId).child("Users joined").child(currentUserId).removeValue()
-            databaseRef.child("events").child(eventId).observeEventType(FIRDataEventType.Value, withBlock: { (snapshot) in
-                let dict = snapshot.value! as! [String:AnyObject]
-                var count = dict["counter"] as! Int
-                //var number = NSNumberFormatter().numberFromString(dict["Number of people looking for"] as! String)?.integerValue
-                if (count > 0) {
-                    count = count - 1
-                    self.databaseRef.child("events").child(eventId).child("counter").setValue(count)
-                }
+            var count = self.eventDetails["counter"] as! Int
+            if (count > 0) {
+                count = count - 1
                 
-                
-                
-            })
+            }
+            databaseRef.child("events").child(eventId).child("counter").setValue(count)
 
             alertTitle = "Action Successful"
             alertMessage = "You have left this event"

@@ -21,7 +21,6 @@ class ChatViewController: JSQMessagesViewController {
     //creates bubble
     override func collectionView(collectionView: JSQMessagesCollectionView!,
                                  messageBubbleImageDataForItemAtIndexPath indexPath: NSIndexPath!) -> JSQMessageBubbleImageDataSource! {
-        print(currentUser)
         let message = messages[indexPath.item]
         if message.senderId == senderId {
             return outgoingBubbleImageView
@@ -142,11 +141,13 @@ class ChatViewController: JSQMessagesViewController {
         
         messagesQuery.observeEventType(.ChildAdded) { (snapshot: FIRDataSnapshot!) in
             
-            let id = snapshot.value?["senderId"] as! String
-            let text = snapshot.value?["text"] as! String
+            let senderId = snapshot.value?["senderId"] as! String
+            var text = snapshot.value?["text"] as! String
             let displayName = snapshot.value?["name"] as! String
-            
-            self.addMessage(id, text: text, name: displayName)
+            if(senderId != self.currentUser!.uid) {
+                text = displayName + "\r\n" + text
+            }
+            self.addMessage(senderId, text: text, name: displayName)
             
             
             self.finishReceivingMessage()
