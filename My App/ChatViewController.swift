@@ -124,11 +124,11 @@ class ChatViewController: JSQMessagesViewController {
         super.viewDidLoad()
         let appDelegate = UIApplication.sharedApplication().delegate as! AppDelegate
         appDelegate.shouldRotate = true
-        
+        self.title = "Chat View"
         self.senderId = currentUser?.uid
         self.senderDisplayName = currentUser?.displayName
         //TODO CHANGE TITLE
-        title = "EventName"
+       // title = "EventName"
         setupBubbles()
         collectionView!.collectionViewLayout.incomingAvatarViewSize = CGSizeMake(5, 5)
         collectionView!.collectionViewLayout.outgoingAvatarViewSize = CGSizeMake(5, 5)

@@ -1,51 +1,33 @@
 //
-//  ManageEventTableViewController.swift
+//  UpdateEventTableViewController.swift
 //  My App
 //
-//  Created by Shailesh Nahata on 21/08/16.
+//  Created by Shailesh Nahata on 22/08/16.
 //  Copyright © 2016 Shailesh Nahata. All rights reserved.
 //
 
 import UIKit
 import FirebaseDatabase
-import FirebaseAuth
 
-class ManageEventTableViewController: UITableViewController {
-    var about = [String]()
-    var ids = [String]()
+class UpdateEventTableViewController: UITableViewController {
+    
+    var textfields = ["Activity Name", "Date", "Suggested Time", "Targetted Age Group", "Number of people looking for", "Location"]
     var eventID = ""
-    let databaseRef = FIRDatabase.database().reference()
-    let currentUserId = (FIRAuth.auth()?.currentUser!.uid)!
-
+    var about = [String]()
+    var ref = FIRDatabase.database().reference()
+    
     override func viewDidLoad() {
         super.viewDidLoad()
-        self.title = "Users Joined" 
-        dispatch_async(dispatch_get_main_queue()) {
-            self.databaseRef.child("events").child(self.eventID).child("Users joined").observeEventType(.Value, withBlock: { snapshot in
-                self.about = []
-                for child in snapshot.children {
-                    let snap = (child as? FIRDataSnapshot)!
-                    if(snap.key != self.currentUserId) {
-                        self.ids.append(snap.key)
-                        self.about.append(snap.value as! String)
-                    }
-
-                }
-                self.tableView.reloadData()
-                }, withCancelBlock: { error in
-                    print(error.description)
-            })
-        }
+        self.hideKeyboardWhenTappedAround()
+        self.tableView.contentInset = UIEdgeInsetsMake(20, 0, 0, 0)
         
-
         
     }
 
-    override func didReceiveMemoryWarning() {
-        super.didReceiveMemoryWarning()
-        // Dispose of any resources that can be recreated.
+    @IBAction func didTapUpdateButton(sender: UIButton) {
+        
     }
-
+    
     // MARK: - Table view data source
 
     override func numberOfSectionsInTableView(tableView: UITableView) -> Int {
@@ -55,33 +37,15 @@ class ManageEventTableViewController: UITableViewController {
 
     override func tableView(tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
         // #warning Incomplete implementation, return the number of rows
-        return self.about.count
+        return self.textfields.count
     }
 
     override func tableView(tableView: UITableView, cellForRowAtIndexPath indexPath: NSIndexPath) -> UITableViewCell {
-        let cell = tableView.dequeueReusableCellWithIdentifier("User Cell", forIndexPath: indexPath)
-
-        // Configure the cell...
-        cell.textLabel?.text = about[indexPath.row]
-        cell.detailTextLabel?.text = ""
-        return cell
-    }
-    
-    override func prepareForSegue(segue: UIStoryboardSegue, sender: AnyObject?) {
-        let destination = segue.destinationViewController as UIViewController
-        if let userDetailVC = destination as? UserDetailsTableViewController {
-            if segue.identifier == "goToUserDetails" {
-                let indexPath: NSIndexPath = self.tableView.indexPathForSelectedRow!
-                userDetailVC.userID = self.ids[indexPath.row]
-                userDetailVC.eventID = self.eventID
-            }
-        }
+        let cell: UpdateEventTableViewCell = tableView.dequeueReusableCellWithIdentifier("updateCell", forIndexPath: indexPath) as! UpdateEventTableViewCell
         
-        if let updateEventsVC = destination as? UpdateEventTableViewController {
-            if segue.identifier == "goToUpdateEvent" {
-                updateEventsVC.eventID = eventID
-            }
-        }
+        cell.configure("\(about[indexPath.row])", placeholder: "\(textfields[indexPath.row])")
+        
+        return cell
     }
 
     /*

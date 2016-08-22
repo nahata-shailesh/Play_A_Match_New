@@ -37,10 +37,8 @@ class EventDetailsTableViewController: UITableViewController {
 
     @IBAction func didTapChatButton(sender: UIBarButtonItem) {
         
-        print("ALallalala")
         print(joinButton.currentTitle)
         if joinButton.currentTitle == "Join Event" || joinButton.currentTitle == "This event is full" {
-            print("Lala")
             let alert = UIAlertController(title: "Error",
                                           message: "Please join this event to access chat",
                                           preferredStyle: UIAlertControllerStyle.Alert)
@@ -58,7 +56,6 @@ class EventDetailsTableViewController: UITableViewController {
     }
     
     @IBAction func didTapJoin(sender: UIButton) {
-        print("ALallalala")
         let text = joinButton.currentTitle
         var alertTitle = ""
         var alertMessage = ""

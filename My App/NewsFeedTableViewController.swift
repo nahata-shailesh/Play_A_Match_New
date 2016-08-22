@@ -13,6 +13,7 @@ import FirebaseDatabase
 
 class NewsFeedTableViewController: UITableViewController {
     let searchController = UISearchController(searchResultsController: nil)
+
     
     @IBAction func unwindToEventsPage(segue: UIStoryboardSegue) {}
     
@@ -52,9 +53,10 @@ class NewsFeedTableViewController: UITableViewController {
     //
     //    }
     
+    
     override func viewDidLoad() {
         super.viewDidLoad()
-        
+
         if let selectedTabIndex = tabBarController?.selectedIndex {
             switch selectedTabIndex {
             case 0: print ("Case 0")
@@ -123,7 +125,9 @@ class NewsFeedTableViewController: UITableViewController {
         }
         //display name of event, type, and time
         
-        cell.textLabel?.text = data["Activity Name"] as! String
+        cell.textLabel?.text = data["Activity Name"] as? String
+        print(data["Date"])
+        print(data["Suggested Time"])
         cell.detailTextLabel?.text = "Date: " + (data["Date"] as! String) + "  Time: " + (data["Suggested Time"]! as! String)
 
 
