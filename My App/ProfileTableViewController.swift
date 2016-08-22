@@ -44,14 +44,13 @@ class ProfileTableViewController: UITableViewController {
         
         var index = 0
         while index < self.about.count {
-            
             let indexPath = NSIndexPath(forRow: index, inSection: 0)
             let cell: TextInputTableViewCell? = self.tableView.cellForRowAtIndexPath(indexPath) as! TextInputTableViewCell?
             let field: String? = (cell?.TextField.placeholder)!
-            if field == "Name" && userDetails!["Name"] as? String == ""  {
+            if field == "Name" && userDetails!["Name"] != nil  {
                 cell?.configure(self.user?.displayName, placeholder: field!)
             }
-            else if field == "Email" && userDetails!["Email"] as? String == ""{
+            else if field == "Email" && userDetails!["Email"] != nil {
                 cell?.configure(self.user?.email, placeholder: field!)
             } else {
                 cell?.configure(userDetails?.objectForKey(field!) as? String, placeholder: field!)

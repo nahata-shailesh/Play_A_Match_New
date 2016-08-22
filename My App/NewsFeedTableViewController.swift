@@ -17,7 +17,6 @@ class NewsFeedTableViewController: UITableViewController {
     
     @IBAction func unwindToEventsPage(segue: UIStoryboardSegue) {}
     
-    
     @IBAction func didTapLogout(sender: UIBarButtonItem) {
         // signs the user out of the firebase app
         try! FIRAuth.auth()!.signOut()
@@ -44,43 +43,51 @@ class NewsFeedTableViewController: UITableViewController {
         tableView.reloadData()
     }
     
-    // Alternative to segueing directly from the storyboard
-    
-    //    @IBAction func didTapCreateButton(sender: UIBarButtonItem) {
-    //        let mainStoryBoard: UIStoryboard = UIStoryboard(name: "Main", bundle: nil)
-    //        let viewController: UIViewController = mainStoryBoard.instantiateViewControllerWithIdentifier("EventView")
-    //        self.presentViewController(viewController, animated: true, completion: nil)
-    //
-    //    }
-    
-    
     override func viewDidLoad() {
         super.viewDidLoad()
-
-        if let selectedTabIndex = tabBarController?.selectedIndex {
-            switch selectedTabIndex {
-            case 0: print ("Case 0")
-            case 1: print ("Case 1")
-            case 2: print ("Case 2")
-            case 3: print ("Case 3")
-            default: break
-                
+        let index = tabBarController?.selectedIndex
+        func condition(event : [String: AnyObject]) -> Bool {
+            let id = currentUser!.uid
+            if let selectedTabIndex = index {
+                switch selectedTabIndex {
+                case 2:
+                    print(event)
+                    // error is here
+                    let author = event["author"] as! String
+                    return (author == id)
+                case 3:
+                    print(event)
+                    let usersJoinedDict = event["Users joined"] as! [String : AnyObject]
+                    for (key,_) in usersJoinedDict  {
+                        if(key == id) {
+                            return true
+                        }
+                    }
+                    return false
+                default: break
+                    
+                }
             }
+            return true
         }
-        
         dispatch_async(dispatch_get_main_queue()) {
         self.databaseRef.child("events").observeEventType(.Value, withBlock: { snapshot in
+            //re initialise to null
             self.objectArray = []
                 for child in snapshot.children {
                     let snap = (child as? FIRDataSnapshot)!
                     let dict = (snap.value as! [String : AnyObject])
-                    self.objectArray.append(dict)
-                }   
+                    if(condition(dict)) {
+                        self.objectArray.append(dict)
+                    }
+                }
                 self.tableView.reloadData()
             }, withCancelBlock: { error in
                 print(error.description)
             })
          }
+                
+        self.tableView.reloadData();
 		 
         self.searchController.searchResultsUpdater = self
         self.searchController.dimsBackgroundDuringPresentation = false
