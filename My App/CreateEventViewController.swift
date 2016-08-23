@@ -9,6 +9,7 @@
 import UIKit
 import FirebaseDatabase
 import FirebaseAuth
+import Validator
 
 class CreateEventViewController: UIViewController {
     
@@ -26,9 +27,23 @@ class CreateEventViewController: UIViewController {
         // loop for alert presentation
         while i < textFields.count {
             let textFieldValue = self.view.viewWithTag(i+1) as! UITextField
-            if textFieldValue.text == "" {
+            var valid = false
+            let rule = ValidationRulePattern(pattern: .EmailAddress, failureError: ValidationError(message: "adsdsadadas") )
+            let result = textFieldValue.validate(rule: rule)
+            // Note: the above is equivalent to Validator.validate(input: "invalid@email,com", rule: rule)
+            
+            switch result {
+            case .Valid:
+                valid = true
+                print("")
+            case .Invalid(let failures):
+                print(failures.first?.message)
+            }
+            
+            
+            if !valid {
                 var alert = UIAlertController(title: "Incomplete Event",
-                message: "Please fill in all the textfields",
+                message: "Please fill in all the textfields with the correct format",
                 preferredStyle: UIAlertControllerStyle.Alert)
                 
                 alert.addAction(UIAlertAction(title: "OK",
@@ -36,11 +51,11 @@ class CreateEventViewController: UIViewController {
                 { (action: UIAlertAction) -> Void in
                     //do nothing
                 }
-            )
+                )
             areAllTextFieldsFilled = false
             presentViewController(alert, animated: true, completion: nil)
             break
-        }
+            }
         i = i + 1
     }
         if areAllTextFieldsFilled {

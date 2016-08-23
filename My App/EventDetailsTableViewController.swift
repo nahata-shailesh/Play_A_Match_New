@@ -24,10 +24,8 @@ class EventDetailsTableViewController: UITableViewController {
     
     @IBAction func didTapChatButton(sender: UIBarButtonItem) {
         
-        print("ALallalala")
         print(joinButton.currentTitle)
         if joinButton.currentTitle == "Join Event" || joinButton.currentTitle == "This event is full" {
-            print("Lala")
             let alert = UIAlertController(title: "Error",
                                           message: "Please join this event to access chat",
                                           preferredStyle: UIAlertControllerStyle.Alert)
@@ -45,7 +43,6 @@ class EventDetailsTableViewController: UITableViewController {
     }
     
     @IBAction func didTapJoin(sender: UIButton) {
-        print("ALallalala")
         let text = joinButton.currentTitle
         var alertTitle = ""
         var alertMessage = ""
@@ -82,7 +79,18 @@ class EventDetailsTableViewController: UITableViewController {
             
         }
         else if text == "Delete Event" {
+            let joinedUsers = eventDetails["Users joined"] as! [String: String]
+            for(key,_) in joinedUsers {
+                if(key != (self.eventDetails["author"] as! String)) {
+                    databaseRef.child("user_profile").child(key).child("JoinedEvents").child(eventId).removeValue()
+
+                } else {
+                    databaseRef.child("user_profile").child(key).child("MyEvents").child(eventId).removeValue()
+                }
+            }
+            
             databaseRef.child("events").child(eventId).removeValue()
+            
             alertTitle = "Action Successful"
             alertMessage = "You have deleted this event"
 

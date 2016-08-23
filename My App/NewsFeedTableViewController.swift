@@ -44,6 +44,31 @@ class NewsFeedTableViewController: UITableViewController {
     
     override func viewDidLoad() {
         super.viewDidLoad()
+        var hasEmail = false
+        var hasName = false
+        // configure profile here
+        self.databaseRef.child("user_profile").child(currentUser!.uid).observeEventType(.Value, withBlock: { snapshot in
+            for child in snapshot.children {
+                let snap = (child as? FIRDataSnapshot)!
+                if(snap.key == "Name") {
+                    hasEmail = true
+                } else if(snap.key == "Email") {
+                    hasEmail = true
+                } else {
+                    
+                }
+            }
+            
+        })
+        if(!hasEmail) {
+            self.databaseRef.child("user_profile").child(currentUser!.uid).child("Email").setValue(currentUser!.email!)
+            
+        }
+        
+        if(!hasName) {
+        self.databaseRef.child("user_profile").child(currentUser!.uid).child("Name").setValue(currentUser!.displayName!)
+        }
+        
         let index = tabBarController?.selectedIndex
         func condition(event : [String: AnyObject]) -> Bool {
             let id = currentUser!.uid
@@ -132,6 +157,8 @@ class NewsFeedTableViewController: UITableViewController {
         //display name of event, type, and time
         
         cell.textLabel?.text = data["Activity Name"] as! String
+        print(data["Date"])
+        print(data["Sugested Time"])
         cell.detailTextLabel?.text = "Date: " + (data["Date"] as! String) + "  Time: " + (data["Suggested Time"]! as! String)
 
 
