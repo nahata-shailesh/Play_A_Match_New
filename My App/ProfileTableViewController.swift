@@ -26,21 +26,6 @@ class ProfileTableViewController: UITableViewController {
         
         let usersDict = snapshot.value as! NSDictionary
         let userDetails = usersDict.objectForKey(self.user!.uid)
-            
-
-//        if let user = FIRAuth.auth()?.currentUser {
-//            // User is signed in.
-//            let name = user.displayName
-//            let email = user.email
-////            let photoUrl = user.photoURL
-////            let uid = user.uid;
-//            
-//            userDetails!["Name"] = name
-//            userDetails!["Email"] = email
-//            
-//        } else {
-//            // No user is signed in.
-//        }
         
         var index = 0
         while index < self.about.count {

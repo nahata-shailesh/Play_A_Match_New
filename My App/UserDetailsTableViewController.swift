@@ -20,7 +20,7 @@ class UserDetailsTableViewController: UITableViewController {
     override func viewDidLoad() {
         super.viewDidLoad()
         self.tableView.contentInset = UIEdgeInsetsMake(20, 0, 0, 0)
-        self.title = "Users Details" 
+        self.title = "Users Details"
         dispatch_async(dispatch_get_main_queue()) {
             self.databaseRef.child("user_profile").child(self.userID).observeEventType(.Value, withBlock: { snapshot in
                 self.about = []
@@ -70,6 +70,7 @@ class UserDetailsTableViewController: UITableViewController {
     }
 
     override func tableView(tableView: UITableView, cellForRowAtIndexPath indexPath: NSIndexPath) -> UITableViewCell {
+        print("BABA")
         let cell: UserDetailTableViewCell = tableView.dequeueReusableCellWithIdentifier("User Field", forIndexPath: indexPath) as! UserDetailTableViewCell
         
         cell.configure(about[indexPath.row])
