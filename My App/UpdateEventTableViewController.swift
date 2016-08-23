@@ -16,6 +16,8 @@ class UpdateEventTableViewController: UITableViewController {
     var about = [AnyObject]()
     var ref = FIRDatabase.database().reference()
     
+
+
     override func viewDidLoad() {
         super.viewDidLoad()
         self.hideKeyboardWhenTappedAround()
@@ -42,6 +44,39 @@ class UpdateEventTableViewController: UITableViewController {
     }
 
     @IBAction func didTapUpdateButton(sender: UIButton) {
+        var index = 0
+        
+        while index < about.count {
+            
+            let indexPath = NSIndexPath(forRow: index, inSection: 0)
+            let cell: UpdateEventTableViewCell? = self.tableView.cellForRowAtIndexPath(indexPath) as? UpdateEventTableViewCell
+            
+            if cell?.myTextField.text != "" {
+                if cell?.myTextField.placeholder == "Number of people looking for" {
+                    let item = NSNumberFormatter().numberFromString((cell?.myTextField.text)!)?.integerValue
+                    self.ref.child("events").child(self.eventID).child("\(textfields[index])").setValue(item)
+                }
+                else {
+                    let item: String? = cell?.myTextField.text
+                    self.ref.child("events").child(self.eventID).child("\(textfields[index])").setValue(item)
+                }
+                
+            }
+            index += 1
+        }
+        
+        let alert = UIAlertController(title: "Congratulations",
+                                      message: "Your event has been updated",
+                                      preferredStyle: UIAlertControllerStyle.Alert)
+        
+        alert.addAction(UIAlertAction(title: "OK",
+            style: .Cancel)
+        { (action: UIAlertAction) -> Void in
+            self.navigationController?.popViewControllerAnimated(true)
+            }
+        )
+        
+        presentViewController(alert, animated: true, completion: nil)
         
     }
     
