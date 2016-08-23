@@ -7,21 +7,54 @@
 //
 
 import UIKit
+import FirebaseDatabase
+import FirebaseAuth
 
 class UserDetailsTableViewController: UITableViewController {
     var userID = ""
+    var eventID = ""
     var about = [String]()
+    let databaseRef = FIRDatabase.database().reference()
+    let currentUserId = (FIRAuth.auth()?.currentUser!.uid)!
 
     override func viewDidLoad() {
         super.viewDidLoad()
         self.tableView.contentInset = UIEdgeInsetsMake(20, 0, 0, 0)
-        
-        //Implement here
+        self.title = "Users Details" 
+        dispatch_async(dispatch_get_main_queue()) {
+            self.databaseRef.child("user_profile").child(self.userID).observeEventType(.Value, withBlock: { snapshot in
+                self.about = []
+                for child in snapshot.children {
+                    let snap = (child as? FIRDataSnapshot)!
+                    if(snap.key != "JoinedEvents" && snap.key != "MyEvents") {
+                        self.about.append(snap.key+": "+(snap.value as! String))
+                    }
+                }
+                self.tableView.reloadData()
+                }, withCancelBlock: { error in
+                    print(error.description)
+            })
+        }
         
     }
 
     @IBAction func didPressRemoveUserButton(sender: UIButton) {
-        //Delete User here
+        databaseRef.child("events").child(self.eventID).child("Users joined").child(userID).removeValue()
+    databaseRef.child("user_profile").child(userID).child("JoinedEvents").child(self.eventID).removeValue()
+        
+        //add alert and redirect back to manage events
+        var alert = UIAlertController(title: "Action Successful",
+                                      message: "You have successfully removed this user!",
+                                      preferredStyle: UIAlertControllerStyle.Alert)
+        
+        alert.addAction(UIAlertAction(title: "OK",
+            style: .Default)
+        { (action: UIAlertAction) -> Void in
+            self.navigationController?.popViewControllerAnimated(true)
+            }
+        )
+        
+        presentViewController(alert, animated: true, completion: nil)
     }
     
     // MARK: - Table view data source

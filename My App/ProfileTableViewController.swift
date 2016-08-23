@@ -62,15 +62,7 @@ class ProfileTableViewController: UITableViewController {
     })
     }
     
-//    func textFieldShouldReturn(myTextField: UITextField) -> Bool {
-//        myTextField.resignFirstResponder()
-//        return true
-//    }
-//    
-//    override func touchesBegan(touches: Set<UITouch>, withEvent event: UIEvent?) {
-//        self.view.endEditing(true)
-//    }
-    
+
     @IBAction func didTapUpdate(sender: UIButton) {
         
         var index = 0
