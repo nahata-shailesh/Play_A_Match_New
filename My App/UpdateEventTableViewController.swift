@@ -13,14 +13,31 @@ class UpdateEventTableViewController: UITableViewController {
     
     var textfields = ["Activity Name", "Date", "Suggested Time", "Targetted Age Group", "Number of people looking for", "Location"]
     var eventID = ""
-    var about = [String]()
+    var about = [AnyObject]()
     var ref = FIRDatabase.database().reference()
     
     override func viewDidLoad() {
         super.viewDidLoad()
         self.hideKeyboardWhenTappedAround()
         self.tableView.contentInset = UIEdgeInsetsMake(20, 0, 0, 0)
-        
+        dispatch_async(dispatch_get_main_queue()) {
+            self.ref.child("events").child(self.eventID).observeEventType(.Value, withBlock: { snapshot in
+                self.about = []
+                for child in snapshot.children {
+                    let snap = (child as? FIRDataSnapshot)!
+                    if(snap.key != "Users joined" && snap.key != "author" && snap.key != "counter" && snap.key != "id") {
+                        if(snap.key != "Number of people looking for") {
+                            self.about.append(snap.value as! String)
+                        } else {
+                            self.about.append(snap.value as! Int)
+                        }
+                    }
+                }
+                self.tableView.reloadData()
+                }, withCancelBlock: { error in
+                    print(error.description)
+            })
+        }
         
     }
 
@@ -37,10 +54,12 @@ class UpdateEventTableViewController: UITableViewController {
 
     override func tableView(tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
         // #warning Incomplete implementation, return the number of rows
-        return self.textfields.count
+        return self.about.count
     }
 
     override func tableView(tableView: UITableView, cellForRowAtIndexPath indexPath: NSIndexPath) -> UITableViewCell {
+        
+
         let cell: UpdateEventTableViewCell = tableView.dequeueReusableCellWithIdentifier("updateCell", forIndexPath: indexPath) as! UpdateEventTableViewCell
         
         cell.configure("\(about[indexPath.row])", placeholder: "\(textfields[indexPath.row])")
