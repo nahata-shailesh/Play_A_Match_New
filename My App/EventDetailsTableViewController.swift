@@ -79,7 +79,18 @@ class EventDetailsTableViewController: UITableViewController {
             
         }
         else if text == "Delete Event" {
+            let joinedUsers = eventDetails["Users joined"] as! [String: String]
+            for(key,_) in joinedUsers {
+                if(key != (self.eventDetails["author"] as! String)) {
+                    databaseRef.child("user_profile").child(key).child("JoinedEvents").child(eventId).removeValue()
+
+                } else {
+                    databaseRef.child("user_profile").child(key).child("MyEvents").child(eventId).removeValue()
+                }
+            }
+            
             databaseRef.child("events").child(eventId).removeValue()
+            
             alertTitle = "Action Successful"
             alertMessage = "You have deleted this event"
 
