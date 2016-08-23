@@ -9,7 +9,6 @@
 import UIKit
 import FirebaseDatabase
 import FirebaseAuth
-import Validator
 
 class CreateEventViewController: UIViewController {
     
@@ -27,23 +26,9 @@ class CreateEventViewController: UIViewController {
         // loop for alert presentation
         while i < textFields.count {
             let textFieldValue = self.view.viewWithTag(i+1) as! UITextField
-            var valid = false
-            let rule = ValidationRulePattern(pattern: .EmailAddress, failureError: ValidationError(message: "adsdsadadas") )
-            let result = textFieldValue.validate(rule: rule)
-            // Note: the above is equivalent to Validator.validate(input: "invalid@email,com", rule: rule)
-            
-            switch result {
-            case .Valid:
-                valid = true
-                print("")
-            case .Invalid(let failures):
-                print(failures.first?.message)
-            }
-            
-            
-            if !valid {
+            if textFieldValue.text == "" {
                 var alert = UIAlertController(title: "Incomplete Event",
-                message: "Please fill in all the textfields with the correct format",
+                message: "Please fill in all the textfields",
                 preferredStyle: UIAlertControllerStyle.Alert)
                 
                 alert.addAction(UIAlertAction(title: "OK",
@@ -51,36 +36,41 @@ class CreateEventViewController: UIViewController {
                 { (action: UIAlertAction) -> Void in
                     //do nothing
                 }
-                )
+            )
             areAllTextFieldsFilled = false
             presentViewController(alert, animated: true, completion: nil)
             break
-            }
+        }
         i = i + 1
-    }
+        }
         if areAllTextFieldsFilled {
-        
+            var post = [String: AnyObject]()
+            post["author"] = currentUser!.uid
+            post["id"] = activity.key
+            post["counter"] = 0
+            
+            FIRDatabase.database().reference().child("user_profile").child(currentUser!.uid).child("MyEvents").child(eventId).setValue(eventId)
+            var dict = [String: AnyObject]()
+            dict[currentUser!.uid] = currentUser!.displayName
+            post["Users joined"] = (dict as! NSDictionary)
+            
             i = 0
             while i < textFields.count {
                 //text fields have been assigned with viewTags which start with 1
                 let textFieldValue = self.view.viewWithTag(i+1) as! UITextField
                 if(i != 4) {
                     let item = textFieldValue.text
-                    activity.child("\(self.textFields[i])").setValue(item)
+                    post["\(self.textFields[i])"] = item
 
                 } else {
                     let item = NSNumberFormatter().numberFromString(textFieldValue.text!)?.integerValue
-                    activity.child("\(self.textFields[i])").setValue(item)
+                    post["\(self.textFields[i])"] = item
 
                 }
                 i = i + 1
             }
-            activity.child("author").setValue(currentUser!.uid)
-            activity.child("id").setValue(activity.key)
-            activity.child("counter").setValue(0)
-            
-            FIRDatabase.database().reference().child("user_profile").child(currentUser!.uid).child("MyEvents").child(eventId).setValue(eventId)
-                FIRDatabase.database().reference().child("events").child(eventId).child("Users joined").child(currentUser!.uid).setValue(currentUser!.uid)
+            activity.setValue(post as! NSDictionary)
+
         }
         // go back to event feed
         self.view!.endEditing(true)

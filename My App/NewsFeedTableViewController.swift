@@ -76,13 +76,11 @@ class NewsFeedTableViewController: UITableViewController {
             if let selectedTabIndex = index {
                 switch selectedTabIndex {
                 case 2:
-                    print(event)
-                    // error is here
                     let author = event["author"] as! String
                     return (author == id)
                 case 3:
-                    print(event)
                     let usersJoinedDict = event["Users joined"] as! [String : AnyObject]
+                    
                     for (key,_) in usersJoinedDict  {
                         if(key == id) {
                             return true
@@ -158,8 +156,6 @@ class NewsFeedTableViewController: UITableViewController {
         //display name of event, type, and time
         
         cell.textLabel?.text = data["Activity Name"] as! String
-        print(data["Date"])
-        print(data["Suggested Time"])
         cell.detailTextLabel?.text = "Date: " + (data["Date"] as! String) + "  Time: " + (data["Suggested Time"]! as! String)
 
 

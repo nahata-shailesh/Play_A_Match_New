@@ -11,7 +11,7 @@ import FirebaseDatabase
 
 class UpdateEventTableViewController: UITableViewController {
     
-    var textfields = ["Activity Name", "Date", "Suggested Time", "Targetted Age Group", "Number of people looking for", "Location"]
+    var textfields = ["Activity Name", "Date", "Location", "Number of people looking for", "Suggested Time", "Targetted Age Group"]
     var eventID = ""
     var about = [AnyObject]()
     var ref = FIRDatabase.database().reference()
